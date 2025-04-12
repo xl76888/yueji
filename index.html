@@ -120,7 +120,11 @@
         .hero-section {
             text-align: center;
             padding: 150px 0;
-            background: url('images/default/hero-bg.jpg') no-repeat center center/cover;
+            background: linear-gradient(135deg, rgba(29, 53, 87, 0.8) 0%, 
+                rgba(69, 123, 157, 0.8) 25%, 
+                rgba(111, 66, 193, 0.7) 50%, 
+                rgba(72, 207, 173, 0.7) 75%, 
+                rgba(168, 218, 220, 0.6) 100%);
             position: relative;
             color: #fff;
             border-radius: 20px;
@@ -506,6 +510,104 @@
             opacity: 1;
             transform: translateY(0);
         }
+
+        /* 左侧导航菜单样式 */
+        .side-nav {
+            position: fixed;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255, 255, 255, 0.95);
+            padding: 20px;
+            border-radius: 0 15px 15px 0;
+            box-shadow: 2px 0 15px rgba(0, 0, 0, 0.1);
+            z-index: 100;
+        }
+
+        .side-nav-section {
+            margin-bottom: 20px;
+        }
+
+        .side-nav-title {
+            font-size: 16px;
+            font-weight: bold;
+            color: #3a6ea5;
+            margin-bottom: 10px;
+            padding-bottom: 5px;
+            border-bottom: 2px solid #eee;
+        }
+
+        .side-nav-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .side-nav-item {
+            margin-bottom: 8px;
+        }
+
+        .side-nav-link {
+            color: #555;
+            text-decoration: none;
+            font-size: 14px;
+            display: block;
+            padding: 5px 0;
+            transition: all 0.3s ease;
+        }
+
+        .side-nav-link:hover {
+            color: #3a6ea5;
+            padding-left: 5px;
+        }
+
+        /* 版权信息样式 */
+        .copyright-info {
+            font-size: 12px;
+            color: #666;
+            margin-top: 20px;
+            padding-top: 10px;
+            border-top: 1px solid #eee;
+        }
+
+        /* 响应式调整 */
+        @media (max-width: 1200px) {
+            .side-nav {
+                transform: translateX(-100%);
+                transition: transform 0.3s ease;
+            }
+
+            .side-nav.active {
+                transform: translateX(0);
+            }
+
+            .side-nav-toggle {
+                position: fixed;
+                left: 0;
+                top: 50%;
+                transform: translateY(-50%);
+                background: #3a6ea5;
+                color: white;
+                padding: 10px;
+                border-radius: 0 5px 5px 0;
+                cursor: pointer;
+                z-index: 99;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+            }
+
+            .side-nav-toggle i {
+                font-size: 20px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .side-nav {
+                width: 80%;
+                max-width: 300px;
+            }
+        }
     </style>
     <!-- 页面加载前检查登录状态 -->
     <script>
@@ -787,6 +889,56 @@
                         </div>
     </footer>
 
+    <div class="side-nav">
+        <div class="side-nav-section">
+            <div class="side-nav-title">关于我们</div>
+            <ul class="side-nav-list">
+                <li class="side-nav-item"><a href="#" class="side-nav-link">网站介绍</a></li>
+                <li class="side-nav-item"><a href="#" class="side-nav-link">团队成员</a></li>
+                <li class="side-nav-item"><a href="#" class="side-nav-link">发展历程</a></li>
+                <li class="side-nav-item"><a href="#" class="side-nav-link">联系我们</a></li>
+            </ul>
+        </div>
+
+        <div class="side-nav-section">
+            <div class="side-nav-title">热门城市</div>
+            <ul class="side-nav-list">
+                <li class="side-nav-item"><a href="city_details.html?city=suzhou" class="side-nav-link">苏州</a></li>
+                <li class="side-nav-item"><a href="city_details.html?city=hangzhou" class="side-nav-link">杭州</a></li>
+                <li class="side-nav-item"><a href="city_details.html?city=shanghai" class="side-nav-link">上海</a></li>
+                <li class="side-nav-item"><a href="city_details.html?city=nanjing" class="side-nav-link">南京</a></li>
+            </ul>
+        </div>
+
+        <div class="side-nav-section">
+            <div class="side-nav-title">功能导航</div>
+            <ul class="side-nav-list">
+                <li class="side-nav-item"><a href="travel.html" class="side-nav-link">旅行记录</a></li>
+                <li class="side-nav-item"><a href="memories.html" class="side-nav-link">照片分享</a></li>
+                <li class="side-nav-item"><a href="plans.html" class="side-nav-link">行程规划</a></li>
+                <li class="side-nav-item"><a href="blog.html" class="side-nav-link">旅行日志</a></li>
+            </ul>
+        </div>
+
+        <div class="side-nav-section">
+            <div class="side-nav-title">帮助中心</div>
+            <ul class="side-nav-list">
+                <li class="side-nav-item"><a href="#" class="side-nav-link">使用指南</a></li>
+                <li class="side-nav-item"><a href="#" class="side-nav-link">常见问题</a></li>
+                <li class="side-nav-item"><a href="#" class="side-nav-link">隐私政策</a></li>
+                <li class="side-nav-item"><a href="#" class="side-nav-link">用户协议</a></li>
+            </ul>
+        </div>
+
+        <div class="copyright-info">
+            © 2023 莹磊悦行 - 记录旅途中的每一刻美好
+        </div>
+    </div>
+
+    <div class="side-nav-toggle" onclick="toggleSideNav()">
+        <i class="fas fa-bars"></i>
+    </div>
+
     <script>
         // 添加滚动触发动画
         document.addEventListener('DOMContentLoaded', function() {
@@ -871,6 +1023,22 @@
                     dot.style.transform = currentTransform.replace(/translateY\([^)]+\)/, `translateY(${translateY}px)`);
                 });
             });
+        });
+
+        // 添加侧边栏切换功能
+        function toggleSideNav() {
+            const sideNav = document.querySelector('.side-nav');
+            sideNav.classList.toggle('active');
+        }
+
+        // 点击页面其他区域关闭侧边栏
+        document.addEventListener('click', function(event) {
+            const sideNav = document.querySelector('.side-nav');
+            const sideNavToggle = document.querySelector('.side-nav-toggle');
+            
+            if (!sideNav.contains(event.target) && !sideNavToggle.contains(event.target)) {
+                sideNav.classList.remove('active');
+            }
         });
     </script>
 </body>
