@@ -1,0 +1,5 @@
+[33mcommit a1da545f8593fe2b2c7adc06b04e38c63d6d7f75[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmaster[m[33m, [m[1;31morigin/master[m[33m)[m
+Author: xl76888 <xl76888@gmail.com>
+Date:   Sun Apr 6 18:31:05 2025 +0800
+
+    修复音乐播放错误，解决AbortError问题并添加用户友好提示

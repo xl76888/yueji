@@ -1,0 +1,1200 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="referrer" content="never">
+    <base href="./">
+    <title>莹磊悦行 - 旅行记录</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <!-- 添加预加载样式，防止页面闪烁 -->
+    <style>
+        body {
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+        body.loaded {
+            opacity: 1;
+        }
+    </style>
+    <style>
+        :root {
+            --primary: #4a59cf;
+            --primary-rgb: 74, 89, 207;
+            --secondary: #e65100;
+            --secondary-rgb: 230, 81, 0;
+            --accent: #7986cb;
+            --text-dark: #333;
+            --text-light: #666;
+            --bg-light: #f5f7ff;
+            --white: #ffffff;
+            --gradient: linear-gradient(135deg, #4a59cf 0%, #e65100 100%);
+            --shadow: 0 10px 30px rgba(0,0,0,0.1);
+            --border-radius: 15px;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Microsoft YaHei', sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            color: var(--text-dark);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            background: var(--gradient);
+            color: var(--white);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            padding: 20px;
+            margin-bottom: 40px;
+            position: relative;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        
+        .header-title {
+            font-size: 28px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .nav {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+        
+        .nav a {
+            color: var(--white);
+            text-decoration: none;
+            padding: 8px 15px;
+            border-radius: 20px;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .nav a.active::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 30px;
+            height: 3px;
+            background: var(--white);
+            border-radius: 3px;
+        }
+        
+        .nav a:hover {
+            background: rgba(255,255,255,0.2);
+        }
+        
+        .menu-toggle {
+            display: none;
+            cursor: pointer;
+            font-size: 1.5rem;
+        }
+        
+        /* 用户菜单样式 */
+        .user-menu {
+            position: relative;
+            display: inline-block;
+        }
+        
+        .user-link {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 30px;
+            padding: 8px 15px;
+        }
+        
+        .user-link i {
+            font-size: 18px;
+        }
+        
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            right: 0;
+            top: 100%;
+            margin-top: 10px;
+            background-color: var(--white);
+            min-width: 180px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+            z-index: 10;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        
+        .dropdown-content a {
+            color: var(--text-dark);
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            transition: all 0.3s ease;
+            border-radius: 0;
+        }
+        
+        .dropdown-content a:hover {
+            background-color: #f1f1f1;
+            color: var(--primary);
+        }
+        
+        .user-menu:hover .dropdown-content {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* 页面主体 */
+        .page-title {
+            text-align: center;
+            margin-bottom: 20px;
+            color: var(--primary);
+            font-size: 2.5rem;
+            font-weight: bold;
+            position: relative;
+            padding-bottom: 15px;
+        }
+        
+        .page-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(to right, var(--primary), var(--accent));
+            border-radius: 4px;
+        }
+        
+        .page-description {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto 50px;
+            color: var(--text-light);
+            font-size: 1.1rem;
+            line-height: 1.8;
+            animation: fadeIn 1.2s ease;
+        }
+        
+        /* 城市选择区域 */
+        .city-selection {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        /* 优化卡片过渡效果，减少GPU负担 */
+        .city-card {
+            background: var(--white);
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            opacity: 1;
+            transform: translateY(0);
+            height: 240px;
+            min-height: 200px;
+            will-change: transform; /* 告知浏览器该元素会变化，优化性能 */
+        }
+        
+        /* 简化悬停效果 */
+        .city-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+            z-index: 2;
+        }
+        
+        /* 隐藏左上角的图片元素 - 简化修复 */
+        .city-card img {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            opacity: 0;
+            pointer-events: none;
+            visibility: hidden;
+        }
+        
+        /* 城市卡片左上角图片元素完全移除 */
+        /* .city-card .city-image > img {
+            display: none !important;
+        } */
+        
+        /* 移除视差发光效果，这可能导致性能问题 */
+        .city-card::after {
+            display: none; /* 禁用可能导致性能问题的效果 */
+        }
+        
+        /* 简化渐变背景切换动画 */
+        .city-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            opacity: 0;
+            z-index: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .city-card:hover::before {
+            opacity: 0.6;
+        }
+        
+        /* 优化图片悬停效果 */
+        .city-image::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 70%;
+            background: linear-gradient(to top, rgba(0,0,0,0.7), transparent);
+            z-index: 1;
+            transition: opacity 0.3s ease;
+        }
+        
+        .city-card:hover .city-image::after {
+            opacity: 0;
+        }
+        
+        /* 移除复杂的hover时的渐变变化 */
+        .city-card:hover .city-image img {
+            transform: none; /* 移除旋转效果 */
+            filter: brightness(0.7); /* 简单的亮度变化代替复杂效果 */
+        }
+        
+        /* 优化城市信息显示 */
+        .city-info {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            padding: 25px;
+            color: var(--white);
+            z-index: 5;
+            transition: transform 0.3s ease;
+        }
+        
+        .city-card:hover .city-info {
+            transform: translateY(-5px);
+        }
+        
+        /* 添加城市图标 */
+        .city-name {
+            font-size: 26px;
+            font-weight: 700;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 10px rgba(0,0,0,0.7);
+            position: relative;
+            display: inline-block;
+            padding-left: 35px;
+        }
+        
+        .city-name::before {
+            content: '\f3c5';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 22px;
+            color: var(--white);
+            opacity: 0.9;
+            transition: all 0.4s ease;
+            z-index: 5; /* 确保图标在最上层 */
+        }
+        
+        .city-card:hover .city-name::before {
+            transform: translateY(-50%) scale(1.2);
+            text-shadow: 0 0 15px rgba(255,255,255,0.8);
+        }
+        
+        .city-name::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 35px;
+            width: 0;
+            height: 3px;
+            background: var(--white);
+            transition: width 0.3s ease;
+            border-radius: 2px;
+        }
+        
+        .city-card:hover .city-name::after {
+            width: calc(100% - 35px);
+        }
+        
+        /* 优化标签和记录显示效果 */
+        .city-records {
+            font-size: 15px;
+            font-weight: 500;
+            margin-bottom: 12px;
+            opacity: 0.8; /* 默认显示但透明度较低 */
+            transition: opacity 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transform: none; /* 移除位移效果 */
+        }
+        
+        .city-card:hover .city-records {
+            opacity: 1;
+            transform: none;
+        }
+        
+        .city-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 10px;
+            opacity: 0.8; /* 默认显示但透明度较低 */
+            transition: opacity 0.3s ease;
+            transform: none; /* 移除位移效果 */
+        }
+        
+        .city-card:hover .city-tags {
+            opacity: 1;
+            transform: none;
+        }
+        
+        /* 优化标签悬停效果 */
+        .city-tag {
+            background: rgba(255,255,255,0.25);
+            color: var(--white);
+            font-size: 12px;
+            padding: 5px 12px;
+            border-radius: 20px;
+            transition: background-color 0.3s ease, color 0.3s ease;
+            border: 1px solid rgba(255,255,255,0.1);
+            text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+        }
+        
+        /* 移除复杂的标签光效 */
+        .city-tag::before {
+            display: none;
+        }
+        
+        .city-card:hover .city-tag {
+            background: rgba(255,255,255,0.35);
+        }
+        
+        .city-tag:hover {
+            background: var(--white);
+            color: var(--primary);
+            text-shadow: none;
+        }
+        
+        /* 热门城市推荐 */
+        .featured-section {
+            margin-bottom: 70px;
+            animation: fadeIn 1s ease;
+        }
+        
+        .section-title {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 1.8rem;
+            color: var(--primary);
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid rgba(0,0,0,0.08);
+            position: relative;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            width: 100px;
+            height: 3px;
+            background: linear-gradient(to right, var(--primary), transparent);
+            border-radius: 3px;
+        }
+        
+        .section-title i {
+            width: 45px;
+            height: 45px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--primary);
+            color: var(--white);
+            border-radius: 50%;
+            font-size: 1.3rem;
+            transition: all 0.5s ease;
+            box-shadow: 0 5px 15px rgba(var(--primary-rgb), 0.3);
+        }
+        
+        .section-title:hover i {
+            transform: rotate(15deg) scale(1.1);
+            background: var(--secondary);
+            box-shadow: 0 8px 20px rgba(var(--secondary-rgb), 0.4);
+        }
+        
+        /* 统计数据区域 */
+        .stats-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 50px;
+        }
+        
+        .stat-card {
+            background: var(--white);
+            border-radius: var(--border-radius);
+            padding: 25px;
+            text-align: center;
+            box-shadow: var(--shadow);
+            transition: all 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+            opacity: 0;
+            transform: translateY(30px);
+            animation: statFadeIn 0.8s forwards;
+            animation-delay: calc(var(--card-index) * 0.15s);
+            overflow: hidden;
+            position: relative;
+        }
+        
+        @keyframes statFadeIn {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                135deg,
+                rgba(255, 255, 255, 0),
+                rgba(255, 255, 255, 0.1),
+                rgba(255, 255, 255, 0)
+            );
+            transform: rotate(45deg);
+            z-index: 1;
+            transition: all 0.8s ease;
+            opacity: 0;
+        }
+        
+        .stat-card:hover::before {
+            left: 100%;
+            opacity: 1;
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(var(--primary-rgb), 0.2);
+        }
+        
+        .stat-icon {
+            width: 60px;
+            height: 60px;
+            margin: 0 auto 20px;
+                display: flex;
+            align-items: center;
+                justify-content: center;
+            background: var(--bg-light);
+            color: var(--primary);
+            border-radius: 50%;
+            font-size: 1.8rem;
+            transition: all 0.5s ease;
+            position: relative;
+            overflow: hidden;
+            z-index: 2;
+        }
+        
+        .stat-card:hover .stat-icon {
+            background: var(--primary);
+            color: var(--white);
+            transform: scale(1.1) rotate(10deg);
+            box-shadow: 0 10px 20px rgba(var(--primary-rgb), 0.3);
+        }
+        
+        .stat-value {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: var(--primary);
+            margin-bottom: 8px;
+            position: relative;
+            display: inline-block;
+            transition: all 0.3s ease;
+        }
+        
+        .stat-card:hover .stat-value {
+            transform: scale(1.1);
+            text-shadow: 0 5px 15px rgba(var(--primary-rgb), 0.3);
+        }
+        
+        .stat-label {
+            color: var(--text-light);
+            font-size: 1rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        
+        .stat-card:hover .stat-label {
+            color: var(--text-dark);
+        }
+        
+        /* 搜索栏增强 */
+        .search-container {
+            max-width: 700px;
+            margin: 0 auto 40px;
+            position: relative;
+            transition: all 0.5s ease;
+        }
+        
+        .search-container:focus-within {
+            transform: scale(1.02);
+        }
+        
+        .search-box {
+                width: 100%;
+            padding: 18px 20px 18px 55px;
+            border: none;
+            border-radius: 30px;
+                font-size: 16px;
+            box-shadow: var(--shadow);
+            transition: all 0.4s ease;
+            background: rgba(255, 255, 255, 0.95);
+        }
+        
+        .search-box:focus {
+            outline: none;
+            box-shadow: 0 10px 25px rgba(var(--primary-rgb), 0.25);
+            padding-left: 65px;
+        }
+        
+        .search-icon {
+            position: absolute;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--primary);
+                font-size: 20px;
+            transition: all 0.4s ease;
+        }
+        
+        .search-container:focus-within .search-icon {
+            left: 25px;
+            color: var(--secondary);
+            transform: translateY(-50%) scale(1.2);
+        }
+        
+        /* 创建记录按钮 */
+        .create-record-btn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 65px;
+            height: 65px;
+            background: var(--primary);
+            color: var(--white);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+                justify-content: center;
+            font-size: 24px;
+            box-shadow: 0 5px 20px rgba(var(--primary-rgb), 0.4);
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            z-index: 10;
+                overflow: hidden;
+        }
+        
+        .create-record-btn::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, transparent 30%, rgba(255, 255, 255, 0.15) 30%);
+            transform: scale(0);
+            opacity: 0;
+            transition: all 0.4s ease;
+        }
+        
+        .create-record-btn:hover::before {
+            transform: scale(3);
+            opacity: 1;
+        }
+        
+        .create-record-btn:hover {
+            background: var(--secondary);
+            transform: scale(1.15) rotate(10deg);
+            box-shadow: 0 10px 25px rgba(var(--secondary-rgb), 0.5);
+        }
+        
+        /* 响应式调整 */
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 20px;
+            }
+            
+            .menu-toggle {
+                display: block;
+                position: absolute;
+                top: 20px;
+                right: 20px;
+            }
+            
+            .nav {
+                display: none;
+                flex-direction: column;
+                align-items: stretch;
+                gap: 10px;
+            }
+            
+            .nav a {
+                text-align: center;
+            }
+            
+            .nav.active {
+                display: flex;
+            }
+            
+            .dropdown-content {
+                position: static;
+                box-shadow: none;
+                margin-top: 5px;
+            }
+            
+            .city-selection {
+                grid-template-columns: 1fr;
+            }
+            
+            .page-title {
+                font-size: 1.8rem;
+            }
+            
+            .city-card {
+                max-width: 450px;
+                margin: 0 auto;
+            }
+            
+            .create-record-btn {
+                width: 50px;
+                height: 50px;
+                font-size: 20px;
+                bottom: 20px;
+                right: 20px;
+            }
+        }
+        
+        /* 添加底部区域样式 */
+        footer {
+            text-align: center;
+            padding: 40px 0 30px;
+            margin-top: 60px;
+            color: var(--text-light);
+            border-top: 1px solid rgba(0,0,0,0.05);
+            position: relative;
+        }
+        
+        footer p {
+            font-size: 1rem;
+            opacity: 0.8;
+            transition: all 0.3s ease;
+        }
+        
+        footer:hover p {
+            color: var(--primary);
+            opacity: 1;
+        }
+        
+        footer::before {
+            content: '';
+            position: absolute;
+            top: -1px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 3px;
+            background: linear-gradient(to right, var(--primary), var(--accent));
+            border-radius: 3px;
+        }
+        
+        /* 添加visible类样式定义 */
+        .city-card.visible, 
+        .stat-card.visible {
+            opacity: 1;
+            transform: translateY(0);
+                animation: none;
+        }
+        
+        /* 确保页面加载前的opacity过渡效果 */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* 恢复渐变背景但使用更优的实现方式 */
+        .city-card .city-image {
+            height: 100%;
+            width: 100%;
+            overflow: hidden;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 1;
+        }
+        
+        /* 恢复渐变背景 - 使用更优的性能实现 */
+        .city-card:nth-child(3n+1) .city-image {
+            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+        }
+        
+        .city-card:nth-child(3n+2) .city-image {
+            background: linear-gradient(135deg, #f83600 0%, #f9d423 100%);
+        }
+        
+        .city-card:nth-child(3n+3) .city-image {
+            background: linear-gradient(135deg, #00b09b 0%, #96c93d 100%);
+        }
+        
+        /* 恢复但简化图标 */
+        .city-records::before {
+            content: '\f02d';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            font-size: 14px;
+        }
+        
+        /* 减少不必要的过渡动画和视觉效果 */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                transition-duration: 0.001ms !important;
+                animation-duration: 0.001ms !important;
+                animation-iteration-count: 1 !important;
+                scroll-behavior: auto !important;
+            }
+        }
+    </style>
+    <!-- 页面加载前检查登录状态 -->
+    <script>
+        // 检查用户是否已登录
+        function checkLogin() {
+            const currentUser = localStorage.getItem('currentUser');
+            if (!currentUser) {
+                // 用户未登录，重定向到登录页面
+                window.location.href = 'login.html';
+            } else {
+                // 用户已登录，显示用户名
+                const navUsername = document.getElementById('nav-username');
+                if (navUsername) {
+                    navUsername.textContent = currentUser;
+                }
+            }
+        }
+        
+        // 修复：防止执行尚未完全加载的DOM元素
+        document.addEventListener('DOMContentLoaded', function() {
+            // 移动端菜单切换
+            const menuToggle = document.querySelector('.menu-toggle');
+            const nav = document.querySelector('.nav');
+            
+            if (menuToggle && nav) {
+                menuToggle.addEventListener('click', function() {
+                    nav.classList.toggle('active');
+                });
+            }
+            
+            // 添加退出登录功能
+            const logoutBtn = document.getElementById('logout-btn');
+            if (logoutBtn) {
+                logoutBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    if (confirm('确定要退出登录吗？')) {
+                        localStorage.removeItem('currentUser');
+                        window.location.href = 'login.html';
+                    }
+                });
+            }
+            
+            // 优化鼠标悬停事件处理，减少性能消耗
+            let isHoveringCard = false;
+            document.querySelectorAll('.city-card').forEach(card => {
+                card.style.opacity = '1';
+                card.style.transform = 'translateY(0)';
+                
+                // 确保卡片背景正确显示
+                const cityImage = card.querySelector('.city-image');
+                if (cityImage) {
+                    cityImage.style.display = 'block';
+                    cityImage.style.visibility = 'visible';
+                }
+                
+                // 确保城市信息正确显示
+                const cityInfo = card.querySelector('.city-info');
+                if (cityInfo) {
+                    cityInfo.style.display = 'block';
+                    cityInfo.style.visibility = 'visible';
+                }
+                
+                // 优化卡片悬停事件
+                card.addEventListener('mouseenter', function() {
+                    isHoveringCard = true;
+                    
+                    // 显示城市详细信息气泡
+                    const cityName = this.getAttribute('data-city');
+                    if (cityName === 'suzhou') {
+                        showCityTooltip(this, "雕花楼、东山古寺、东山沙滩和太湖风光，尽享水乡风情。");
+                    }
+                });
+                
+                card.addEventListener('mouseleave', function() {
+                    isHoveringCard = false;
+                    // 隐藏详细信息气泡
+                    hideCityTooltip();
+                });
+                
+                // 使用点击事件代替
+                card.addEventListener('click', function() {
+                    const cityName = this.getAttribute('data-city');
+                    if (cityName) {
+                        // 跳转到城市详情页面
+                        window.location.href = `city_details.html?city=${cityName}`;
+                    }
+                });
+            });
+            
+            // 设置统计卡片样式
+            document.querySelectorAll('.stat-card').forEach((card) => {
+                card.style.opacity = '1';
+                card.style.transform = 'translateY(0)';
+            });
+            
+            // 检查登录
+            checkLogin();
+        });
+        
+        // 显示城市详细信息气泡
+        function showCityTooltip(card, content) {
+            // 移除已存在的气泡
+            hideCityTooltip();
+            
+            // 创建气泡元素
+            const tooltip = document.createElement('div');
+            tooltip.className = 'city-tooltip';
+            tooltip.innerHTML = content;
+            tooltip.style.position = 'absolute';
+            tooltip.style.zIndex = '100';
+            tooltip.style.background = 'rgba(0,0,0,0.8)';
+            tooltip.style.color = '#fff';
+            tooltip.style.padding = '10px 15px';
+            tooltip.style.borderRadius = '5px';
+            tooltip.style.maxWidth = '200px';
+            tooltip.style.fontSize = '14px';
+            tooltip.style.boxShadow = '0 5px 15px rgba(0,0,0,0.2)';
+            tooltip.style.transition = 'all 0.3s ease';
+            tooltip.style.opacity = '0';
+            
+            // 添加到body
+            document.body.appendChild(tooltip);
+            
+            // 获取卡片位置
+            const cardRect = card.getBoundingClientRect();
+            
+            // 设置气泡位置 - 在卡片上方居中
+            tooltip.style.left = (cardRect.left + cardRect.width/2 - tooltip.offsetWidth/2) + 'px';
+            tooltip.style.top = (cardRect.top - tooltip.offsetHeight - 10 + window.scrollY) + 'px';
+            
+            // 显示气泡
+            setTimeout(() => {
+                tooltip.style.opacity = '1';
+            }, 10);
+        }
+        
+        // 隐藏城市详细信息气泡
+        function hideCityTooltip() {
+            const tooltip = document.querySelector('.city-tooltip');
+            if (tooltip) {
+                tooltip.remove();
+            }
+        }
+        
+        // 页面加载时执行显示页面
+        window.onload = function() {
+            // 显示页面
+            document.body.classList.add('loaded');
+            
+            // 延迟执行额外的操作
+            setTimeout(function() {
+                // 强制刷新卡片
+                document.querySelectorAll('.city-card').forEach(card => {
+                    // 触发重绘
+                    card.style.opacity = '0.99';
+                    setTimeout(() => {
+                        card.style.opacity = '1';
+                    }, 10);
+                });
+            }, 100);
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="header-title">
+                <i class="fas fa-map-marked-alt"></i> 旅行记录
+            </div>
+            <div class="menu-toggle">
+                <i class="fas fa-bars"></i>
+                    </div>
+            <nav class="nav">
+                <a href="index.html">首页</a>
+                <a href="travel.html" class="active">旅行记录</a>
+                <a href="memories.html">照片分享</a>
+                <a href="plans.html">行程规划</a>
+                <a href="blog.html">旅行日志</a>
+                <div class="user-menu">
+                    <a href="profile.html" class="user-link">
+                        <i class="fas fa-user-circle"></i>
+                        <span id="nav-username">个人中心</span>
+                    </a>
+                    <div class="dropdown-content">
+                        <a href="profile.html"><i class="fas fa-user"></i> 个人中心</a>
+                        <a href="settings.html"><i class="fas fa-cog"></i> 账户设置</a>
+                        <a href="#" id="logout-btn"><i class="fas fa-sign-out-alt"></i> 退出登录</a>
+            </div>
+        </div>
+            </nav>
+        </header>
+        
+        <div class="page-title">城市旅行记录</div>
+        <p class="page-description">
+            选择一个城市，探索用户分享的精彩旅行记录，攻略和体验。您还可以创建自己的旅行记录，分享您的独特视角。
+        </p>
+        
+        <div class="search-container">
+            <i class="fas fa-search search-icon"></i>
+            <input type="text" class="search-box" placeholder="搜索城市、景点或关键词">
+            </div>
+
+        <div class="stats-container">
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fas fa-map-marker-alt"></i>
+                </div>
+                <div class="stat-value">36</div>
+                <div class="stat-label">已收录城市</div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fas fa-book"></i>
+                </div>
+                <div class="stat-value">158</div>
+                <div class="stat-label">旅行记录</div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fas fa-users"></i>
+            </div>
+                <div class="stat-value">520</div>
+                <div class="stat-label">旅行者分享</div>
+        </div>
+
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fas fa-camera"></i>
+        </div>
+                <div class="stat-value">2450</div>
+                <div class="stat-label">精彩照片</div>
+                </div>
+            </div>
+
+        <div class="featured-section">
+            <h2 class="section-title"><i class="fas fa-fire"></i> 热门推荐城市</h2>
+            
+            <div class="city-selection">
+                <div class="city-card" data-city="suzhou">
+                    <div class="city-image">
+                        <img src="images/spots/shantang.jpg" alt="苏州">
+                    </div>
+                    <div class="city-info">
+                        <h3 class="city-name">苏州</h3>
+                        <div class="city-records">26条旅行记录</div>
+                        <div class="city-tags">
+                            <span class="city-tag">园林</span>
+                            <span class="city-tag">古镇</span>
+                            <span class="city-tag">水乡</span>
+                            <span class="city-tag">一日游</span>
+                            <span class="city-tag">2025-04-05</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                <div class="city-card" data-city="hangzhou">
+                    <div class="city-image">
+                        <img src="images/spots/liuyuan.jpg" alt="杭州">
+                    </div>
+                    <div class="city-info">
+                        <h3 class="city-name">杭州</h3>
+                        <div class="city-records">32条旅行记录</div>
+                        <div class="city-tags">
+                            <span class="city-tag">西湖</span>
+                            <span class="city-tag">灵隐寺</span>
+                            <span class="city-tag">美食</span>
+                            <span class="city-tag">三日游</span>
+                    </div>
+                </div>
+            </div>
+
+                <div class="city-card" data-city="nanjing">
+                    <div class="city-image">
+                        <img src="images/spots/tiger-hill.jpg" alt="南京">
+                        </div>
+                    <div class="city-info">
+                        <h3 class="city-name">南京</h3>
+                        <div class="city-records">18条旅行记录</div>
+                        <div class="city-tags">
+                            <span class="city-tag">夫子庙</span>
+                            <span class="city-tag">中山陵</span>
+                            <span class="city-tag">明城墙</span>
+                            <span class="city-tag">历史</span>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+            </div>
+
+        <div class="featured-section">
+            <h2 class="section-title"><i class="fas fa-globe-asia"></i> 江浙沪地区</h2>
+            
+            <div class="city-selection">
+                <div class="city-card" data-city="shanghai">
+                    <div class="city-image">
+                        <img src="images/spots/pingjiang.jpg" alt="上海">
+        </div>
+                    <div class="city-info">
+                        <h3 class="city-name">上海</h3>
+                        <div class="city-records">42条旅行记录</div>
+                        <div class="city-tags">
+                            <span class="city-tag">外滩</span>
+                            <span class="city-tag">迪士尼</span>
+                            <span class="city-tag">城市</span>
+                            <span class="city-tag">购物</span>
+                    </div>
+                </div>
+                    </div>
+                    
+                <div class="city-card" data-city="wuxi">
+                    <div class="city-image">
+                        <img src="images/spots/shiquan.jpg" alt="无锡">
+                        </div>
+                    <div class="city-info">
+                        <h3 class="city-name">无锡</h3>
+                        <div class="city-records">15条旅行记录</div>
+                        <div class="city-tags">
+                            <span class="city-tag">鼋头渚</span>
+                            <span class="city-tag">灵山大佛</span>
+                            <span class="city-tag">太湖</span>
+                        </div>
+                        </div>
+                    </div>
+                    
+                <div class="city-card" data-city="ningbo">
+                    <div class="city-image">
+                        <img src="images/spots/suzhou-museum.jpg" alt="宁波">
+                        </div>
+                    <div class="city-info">
+                        <h3 class="city-name">宁波</h3>
+                        <div class="city-records">11条旅行记录</div>
+                        <div class="city-tags">
+                            <span class="city-tag">天一阁</span>
+                            <span class="city-tag">海鲜</span>
+                            <span class="city-tag">港口</span>
+                        </div>
+                    </div>
+                        </div>
+                        </div>
+                    </div>
+                    
+        <!-- 创建记录按钮 -->
+        <div class="create-record-btn" title="创建旅行记录">
+            <i class="fas fa-plus"></i>
+                    </div>
+                    
+        <footer>
+            <p>© 2023 莹磊悦行 - 记录每一段精彩旅程</p>
+        </footer>
+    </div>
+
+    <script>
+        // 创建记录按钮点击事件 - 确保DOM已加载
+        document.addEventListener('DOMContentLoaded', function() {
+            const createBtn = document.querySelector('.create-record-btn');
+            if (createBtn) {
+                createBtn.addEventListener('click', function() {
+                    // 添加点击动画效果
+                    this.classList.add('clicked');
+                                setTimeout(() => {
+                        this.classList.remove('clicked');
+                    }, 300);
+                    
+                    alert('创建旅行记录功能正在开发中，敬请期待！');
+                });
+            }
+            
+            // 添加按钮点击动画样式
+            const style = document.createElement('style');
+            style.textContent = `
+                .create-record-btn.clicked {
+                    animation: btnPulse 0.3s forwards;
+                }
+                
+                @keyframes btnPulse {
+                    0% { transform: scale(1.15); }
+                    50% { transform: scale(0.95); }
+                    100% { transform: scale(1.15); }
+                }
+            `;
+            document.head.appendChild(style);
+        });
+    </script>
+</body>
+</html> 

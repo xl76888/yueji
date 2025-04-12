@@ -1,0 +1,34 @@
+[
+  {
+    "id": 1,
+    "username": "xiaolei",
+    "nickname": "小磊",
+    "avatar": "images/spots/ChatGPT Image 2025年4月4日 21_01_48.png",
+    "email": "xiaolei@example.com",
+    "location": "上海市嘉定区",
+    "occupation": "旅行摄影师",
+    "interests": "喜欢自然风光、历史古迹",
+    "joined": "2023-01-15",
+    "stats": {
+      "trips": 12,
+      "blogs": 28,
+      "photos": 157
+    }
+  },
+  {
+    "id": 2,
+    "username": "xiaoying",
+    "nickname": "小莹",
+    "avatar": "images/spots/1636714294996851_836_10000.jpg",
+    "email": "xiaoying@example.com",
+    "location": "上海市浦东新区",
+    "occupation": "旅行博主",
+    "interests": "美食探索、文化体验",
+    "joined": "2023-01-15",
+    "stats": {
+      "trips": 15,
+      "blogs": 32,
+      "photos": 203
+    }
+  }
+] 

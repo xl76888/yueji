@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="referrer" content="never">
+    <base href="./">
+    <title>莹磊悦行 - 行程规划</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #4a59cf;
+            --secondary: #e65100;
+            --accent: #7986cb;
+            --text-dark: #333;
+            --text-light: #666;
+            --bg-light: #f5f7ff;
+            --white: #ffffff;
+            --gradient: linear-gradient(135deg, #4a59cf 0%, #e65100 100%);
+            --shadow: 0 10px 30px rgba(0,0,0,0.1);
+            --border-radius: 15px;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Microsoft YaHei', sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            color: var(--text-dark);
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            background: var(--gradient);
+            color: var(--white);
+            padding: 25px;
+            border-radius: var(--border-radius);
+            margin-bottom: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: var(--shadow);
+        }
+        
+        .header-title {
+            font-size: 28px;
+            font-weight: bold;
+        }
+        
+        .nav {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .nav a {
+            color: var(--white);
+            text-decoration: none;
+            padding: 8px 15px;
+            border-radius: 20px;
+            transition: all 0.3s ease;
+        }
+        
+        .nav a:hover, .nav a.active {
+            background: rgba(255,255,255,0.2);
+        }
+        
+        /* 主内容区域 */
+        .plans-container {
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            gap: 30px;
+        }
+        
+        /* 过滤器侧边栏 */
+        .filters {
+            background: var(--white);
+            padding: 25px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            height: fit-content;
+        }
+        
+        .filter-title {
+            font-size: 20px;
+            margin-bottom: 20px;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .filter-group {
+            margin-bottom: 25px;
+        }
+        
+        .filter-group-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: var(--text-dark);
+        }
+        
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+        
+        .checkbox-item input[type="checkbox"] {
+            margin-right: 10px;
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+        }
+        
+        .checkbox-item label {
+            font-size: 14px;
+            color: var(--text-light);
+            cursor: pointer;
+        }
+        
+        .date-picker {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+        
+        /* 行程卡片区域 */
+        .plans-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 25px;
+        }
+        
+        .plan-card {
+            background: var(--white);
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+        }
+        
+        .plan-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+        }
+        
+        .plan-header {
+            padding: 20px;
+            background: var(--primary);
+            color: var(--white);
+        }
+        
+        .plan-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        
+        .plan-date {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+        
+        .plan-status {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 12px;
+            padding: 5px 10px;
+            border-radius: 20px;
+            background: var(--white);
+        }
+        
+        .status-joined {
+            color: #4caf50;
+        }
+        
+        .status-pending {
+            color: #ff9800;
+        }
+        
+        .status-draft {
+            color: #2196f3;
+        }
+        
+        .plan-content {
+            padding: 20px;
+        }
+        
+        .plan-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 15px;
+        }
+        
+        .plan-tag {
+            padding: 4px 10px;
+            background: var(--bg-light);
+            border-radius: 15px;
+            font-size: 12px;
+            color: var(--primary);
+        }
+        
+        .plan-members {
+            display: flex;
+            margin-bottom: 15px;
+        }
+        
+        .member-avatar {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: var(--accent);
+            color: var(--white);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            margin-right: -10px;
+            border: 2px solid var(--white);
+        }
+        
+        .plan-actions {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .btn {
+            padding: 8px 15px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            text-align: center;
+            border: none;
+        }
+        
+        .btn-primary {
+            background: var(--primary);
+            color: var(--white);
+        }
+        
+        .btn-secondary {
+            background: var(--bg-light);
+            color: var(--primary);
+        }
+        
+        .btn:hover {
+            opacity: 0.9;
+            transform: translateY(-2px);
+        }
+        
+        /* 创建行程按钮 */
+        .create-plan-btn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            background: var(--primary);
+            color: var(--white);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 10;
+        }
+        
+        .create-plan-btn:hover {
+            background: var(--secondary);
+            transform: scale(1.1);
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .plans-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .filters {
+                order: 2;
+            }
+            
+            .create-plan-btn {
+                bottom: 20px;
+                right: 20px;
+                width: 50px;
+                height: 50px;
+                font-size: 20px;
+            }
+        }
+    </style>
+    <!-- 页面加载前检查登录状态 -->
+    <script>
+        // 检查用户是否已登录
+        function checkLogin() {
+            const currentUser = localStorage.getItem('currentUser');
+            if (!currentUser) {
+                // 用户未登录，重定向到登录页面
+                window.location.href = 'login.html';
+                return false;
+            }
+            return true;
+        }
+        
+        // 模拟数据
+        const mockPlans = [
+            {
+                id: 1,
+                title: '苏州东山二日游',
+                dateStart: '2025-05-15',
+                dateEnd: '2025-05-16',
+                status: 'joined',
+                tags: ['东山景区', '陆巷古村', '太湖畔'],
+                members: ['小莹', '小磊']
+            },
+            {
+                id: 2,
+                title: '杭州西湖三日游',
+                dateStart: '2025-06-10',
+                dateEnd: '2025-06-12',
+                status: 'draft',
+                tags: ['西湖景区', '灵隐寺', '西溪湿地', '三潭印月'],
+                members: ['小莹']
+            },
+            {
+                id: 3,
+                title: '南京古城探秘',
+                dateStart: '2025-07-05',
+                dateEnd: '2025-07-07',
+                status: 'pending',
+                tags: ['夫子庙', '中山陵', '明城墙'],
+                members: ['小磊']
+            },
+            {
+                id: 4,
+                title: '上海都市周末游',
+                dateStart: '2025-08-15',
+                dateEnd: '2025-08-16',
+                status: 'joined',
+                tags: ['外滩', '南京路', '迪士尼'],
+                members: ['小莹', '小磊']
+            },
+            {
+                id: 5,
+                title: '三亚海滨度假',
+                dateStart: '2025-10-01',
+                dateEnd: '2025-10-05',
+                status: 'draft',
+                tags: ['亚龙湾', '蜈支洲岛'],
+                members: ['小莹']
+            }
+        ];
+        
+        // 生成行程卡片
+        function renderPlans(plans) {
+            const plansGrid = document.getElementById('plans-grid');
+            if (!plansGrid) return;
+            
+            plansGrid.innerHTML = '';
+            
+            if (plans.length === 0) {
+                plansGrid.innerHTML = '<div class="no-plans">没有找到符合条件的行程，请调整筛选条件或创建新行程</div>';
+                return;
+            }
+            
+            plans.forEach(plan => {
+                const statusClass = `status-${plan.status}`;
+                const statusText = plan.status === 'joined' ? '已加入' : plan.status === 'pending' ? '待审核' : '草稿';
+                
+                const planCard = document.createElement('div');
+                planCard.className = 'plan-card';
+                planCard.innerHTML = `
+                    <div class="plan-header">
+                        <div class="plan-title">${plan.title}</div>
+                        <div class="plan-date">${plan.dateStart} 至 ${plan.dateEnd}</div>
+                        <span class="plan-status ${statusClass}">${statusText}</span>
+                    </div>
+                    <div class="plan-content">
+                        <div class="plan-tags">
+                            ${plan.tags.map(tag => `<span class="plan-tag">${tag}</span>`).join('')}
+                        </div>
+                        <div class="plan-members">
+                            ${plan.members.map(member => `
+                                <div class="member-avatar" title="${member}">${member.charAt(0)}</div>
+                            `).join('')}
+                        </div>
+                        <div class="plan-actions">
+                            <a href="#" class="btn btn-primary">查看行程</a>
+                            <a href="#" class="btn btn-secondary">编辑</a>
+                        </div>
+                    </div>
+                `;
+                
+                plansGrid.appendChild(planCard);
+            });
+        }
+        
+        // 过滤行程
+        function filterPlans() {
+            // 获取筛选条件
+            const statusFilters = Array.from(document.querySelectorAll('input[name="status"]:checked')).map(input => input.value);
+            const memberFilters = Array.from(document.querySelectorAll('input[name="member"]:checked')).map(input => input.value);
+            const destinationFilters = Array.from(document.querySelectorAll('input[name="destination"]:checked')).map(input => input.value);
+            
+            // 如果没有选择任何选项，显示所有行程
+            if (statusFilters.length === 0 && memberFilters.length === 0 && destinationFilters.length === 0) {
+                renderPlans(mockPlans);
+                return;
+            }
+            
+            // 筛选行程
+            const filteredPlans = mockPlans.filter(plan => {
+                // 状态筛选
+                const statusMatch = statusFilters.length === 0 || statusFilters.includes(plan.status);
+                
+                // 成员筛选
+                const memberMatch = memberFilters.length === 0 || 
+                    memberFilters.some(member => plan.members.includes(member));
+                
+                // 目的地筛选
+                const destinationMatch = destinationFilters.length === 0 || 
+                    destinationFilters.some(destination => 
+                        plan.tags.some(tag => tag.includes(destination)));
+                
+                return statusMatch && memberMatch && destinationMatch;
+            });
+            
+            renderPlans(filteredPlans);
+        }
+        
+        // 页面加载前立即执行检查，防止闪烁
+        checkLogin();
+        
+        // 页面加载完成后执行
+        document.addEventListener('DOMContentLoaded', function() {
+            // 渲染默认行程
+            renderPlans(mockPlans);
+            
+            // 添加筛选事件监听
+            const filterInputs = document.querySelectorAll('.filters input[type="checkbox"]');
+            filterInputs.forEach(input => {
+                input.addEventListener('change', filterPlans);
+            });
+            
+            // 创建行程按钮点击事件
+            const createPlanBtn = document.querySelector('.create-plan-btn');
+            if (createPlanBtn) {
+                createPlanBtn.addEventListener('click', function() {
+                    alert('创建行程功能正在开发中，敬请期待！');
+                });
+            }
+        });
+    </script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="header-title">
+                <i class="fas fa-route"></i> 行程规划
+            </div>
+            <div class="nav">
+                <a href="index.html">首页</a>
+                <a href="travel.html">旅游攻略</a>
+                <a href="memories.html">旅行回忆</a>
+                <a href="plans.html" class="active">行程规划</a>
+                <a href="blog.html">旅行日志</a>
+            </div>
+        </header>
+        
+        <div class="plans-container">
+            <!-- 筛选条件侧边栏 -->
+            <div class="filters">
+                <h2 class="filter-title"><i class="fas fa-filter"></i> 筛选行程</h2>
+                
+                <div class="filter-group">
+                    <h3 class="filter-group-title">行程状态</h3>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="status-all" name="status" value="all" checked>
+                        <label for="status-all">所有行程</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="status-joined" name="status" value="joined">
+                        <label for="status-joined">已确认</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="status-draft" name="status" value="draft">
+                        <label for="status-draft">草稿</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="status-pending" name="status" value="pending">
+                        <label for="status-pending">待审核</label>
+                    </div>
+                </div>
+                
+                <div class="filter-group">
+                    <h3 class="filter-group-title">行程成员</h3>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="member-xiaolei" name="member" value="小磊">
+                        <label for="member-xiaolei">小磊</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="member-xiaoying" name="member" value="小莹">
+                        <label for="member-xiaoying">小莹</label>
+                    </div>
+                </div>
+                
+                <div class="filter-group">
+                    <h3 class="filter-group-title">目的地</h3>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="dest-suzhou" name="destination" value="苏州">
+                        <label for="dest-suzhou">苏州</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="dest-hangzhou" name="destination" value="杭州">
+                        <label for="dest-hangzhou">杭州</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="dest-nanjing" name="destination" value="南京">
+                        <label for="dest-nanjing">南京</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="dest-shanghai" name="destination" value="上海">
+                        <label for="dest-shanghai">上海</label>
+                    </div>
+                </div>
+                
+                <div class="filter-group">
+                    <h3 class="filter-group-title">日期范围</h3>
+                    <input type="date" class="date-picker" placeholder="开始日期">
+                    <input type="date" class="date-picker" placeholder="结束日期">
+                </div>
+            </div>
+            
+            <!-- 行程卡片网格 -->
+            <div class="plans-grid" id="plans-grid">
+                <!-- 行程卡片将通过JavaScript动态生成 -->
+            </div>
+        </div>
+        
+        <!-- 创建行程按钮 -->
+        <div class="create-plan-btn" title="创建新行程">
+            <i class="fas fa-plus"></i>
+        </div>
+    </div>
+</body>
+</html> 

@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="referrer" content="never">
+    <base href="./">
+    <title>莹磊悦行 - 博客详情</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        /* 基础样式 */
+        body {
+            font-family: 'Microsoft YaHei', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            color: #333;
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* 头部样式 */
+        .header {
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(45deg, #1a237e, #e65100);
+            padding: 30px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+        }
+
+        .header h1 {
+            color: white;
+            margin: 0;
+            font-size: 28px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .back-button {
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(255,255,255,0.2);
+            padding: 10px 15px;
+            border-radius: 20px;
+            color: white;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(5px);
+        }
+
+        .back-button:hover {
+            background: rgba(255,255,255,0.3);
+            transform: translateY(-2px);
+        }
+        
+        /* 导航菜单样式 */
+        .header-nav {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        
+        .header-nav a {
+            text-decoration: none;
+            background: rgba(255,255,255,0.1);
+            color: white;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+        
+        .header-nav a:hover, .header-nav a.active {
+            background: rgba(255,255,255,0.3);
+            transform: translateY(-2px);
+        }
+
+        /* 博客详情样式 */
+        .blog-detail {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+
+        .blog-hero {
+            width: 100%;
+            height: 400px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .blog-hero img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .blog-hero-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 30px;
+            background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+            color: white;
+        }
+
+        .blog-title {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 10px;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
+        }
+
+        .blog-meta {
+            display: flex;
+            gap: 20px;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+
+        .blog-meta span {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .blog-content-wrapper {
+            padding: 30px;
+        }
+
+        .blog-content {
+            line-height: 1.8;
+            font-size: 16px;
+            color: #444;
+        }
+
+        .blog-content p {
+            margin-bottom: 20px;
+        }
+
+        .blog-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 30px 0;
+        }
+
+        .blog-tag {
+            background: rgba(26, 35, 126, 0.1);
+            color: #1a237e;
+            font-size: 14px;
+            padding: 5px 15px;
+            border-radius: 20px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .blog-tag:hover {
+            background: rgba(26, 35, 126, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .blog-actions {
+            display: flex;
+            justify-content: space-between;
+            border-top: 1px solid #eee;
+            padding-top: 20px;
+            margin-top: 30px;
+        }
+
+        .blog-action {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            padding: 8px 15px;
+            border-radius: 20px;
+            background: #f5f5f5;
+            color: #555;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .blog-action:hover {
+            background: #eee;
+            transform: translateY(-2px);
+        }
+
+        .blog-action.like {
+            color: #e53935;
+        }
+
+        .blog-action.bookmark {
+            color: #ffc107;
+        }
+
+        .blog-action.share {
+            color: #2196f3;
+        }
+
+        /* 作者区域 */
+        .author-section {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            display: flex;
+            gap: 20px;
+            align-items: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+
+        .author-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .author-info {
+            flex: 1;
+        }
+
+        .author-name {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 5px;
+            color: #1a237e;
+        }
+
+        .author-bio {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 10px;
+        }
+
+        .follow-btn {
+            background: linear-gradient(45deg, #1a237e, #e65100);
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .follow-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        /* 相关博客 */
+        .related-blogs {
+            margin-top: 30px;
+        }
+
+        .section-title {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: #1a237e;
+        }
+
+        .related-blogs-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .related-blog-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+
+        .related-blog-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+        }
+
+        .related-blog-image {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+        }
+
+        .related-blog-content {
+            padding: 15px;
+        }
+
+        .related-blog-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        .related-blog-meta {
+            display: flex;
+            justify-content: space-between;
+            font-size: 12px;
+            color: #777;
+            margin-bottom: 10px;
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+            
+            .header {
+                flex-direction: column;
+                gap: 15px;
+                text-align: center;
+            }
+            
+            .header-nav {
+                width: 100%;
+                justify-content: center;
+                margin-top: 15px;
+            }
+            
+            .blog-title {
+                font-size: 24px;
+            }
+            
+            .blog-hero {
+                height: 300px;
+            }
+            
+            .author-section {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .related-blogs-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container" id="blog-container">
+        <div class="header">
+            <h1><i class="fas fa-book-open"></i> 旅行日志</h1>
+            <a href="blog.html" class="back-button">
+                <i class="fas fa-arrow-left"></i> 返回日志列表
+            </a>
+            <!-- 导航菜单 -->
+            <nav class="header-nav">
+                <a href="index.html">首页</a>
+                <a href="travel.html">旅游攻略</a>
+                <a href="memories.html">旅行回忆</a>
+                <a href="plans.html">行程规划</a>
+                <a href="blog.html" class="active">旅行日志</a>
+            </nav>
+        </div>
+
+        <!-- 博客详情内容区域 - 将由JavaScript填充 -->
+        <div id="blog-detail-content"></div>
+    </div>
+
+    <script src="js/data-loader.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', async function() {
+            try {
+                // 获取URL参数中的博客ID
+                const urlParams = new URLSearchParams(window.location.search);
+                const blogId = parseInt(urlParams.get('id'));
+                
+                if (!blogId) {
+                    throw new Error('缺少博客ID参数');
+                }
+                
+                // 初始化数据加载器
+                await dataLoader.init();
+                
+                // 获取博客详情
+                const blog = dataLoader.getBlogById(blogId);
+                
+                if (!blog) {
+                    throw new Error('找不到指定ID的博客');
+                }
+                
+                // 获取作者信息
+                const author = dataLoader.getUserByUsername(blog.author);
+                
+                if (!author) {
+                    throw new Error('找不到博客作者信息');
+                }
+                
+                // 更新页面标题
+                document.title = `${blog.title} - 莹磊悦行`;
+                
+                // 渲染博客详情
+                renderBlogDetail(blog, author);
+                
+                // 获取相关博客(同一作者或同类别的其他博客)
+                const relatedBlogs = dataLoader.getBlogs()
+                    .filter(b => b.id !== blog.id && (b.author === blog.author || b.category === blog.category))
+                    .slice(0, 3);
+                
+                // 渲染相关博客
+                renderRelatedBlogs(relatedBlogs);
+                
+            } catch (error) {
+                console.error('博客加载失败:', error);
+                document.getElementById('blog-detail-content').innerHTML = `
+                    <div style="background: white; padding: 30px; border-radius: 15px; text-align: center;">
+                        <h2>博客加载失败</h2>
+                        <p>${error.message || '请刷新页面重试'}</p>
+                        <a href="blog.html" style="display: inline-block; margin-top: 20px; background: #1a237e; color: white; padding: 10px 20px; border-radius: 20px; text-decoration: none;">返回博客列表</a>
+                    </div>
+                `;
+            }
+        });
+        
+        // 渲染博客详情
+        function renderBlogDetail(blog, author) {
+            const contentContainer = document.getElementById('blog-detail-content');
+            
+            // 将博客内容中的换行符转换为HTML段落
+            const formattedContent = blog.content
+                .split('\n\n')
+                .map(paragraph => `<p>${paragraph}</p>`)
+                .join('');
+            
+            contentContainer.innerHTML = `
+                <div class="blog-detail">
+                    <div class="blog-hero">
+                        <img src="${blog.coverImage}" alt="${blog.title}">
+                        <div class="blog-hero-overlay">
+                            <div class="blog-title">${blog.title}</div>
+                            <div class="blog-meta">
+                                <span><i class="fas fa-user"></i> ${blog.authorName}</span>
+                                <span><i class="far fa-calendar-alt"></i> ${blog.date}</span>
+                                <span><i class="fas fa-tag"></i> ${blog.category}</span>
+                                <span><i class="fas fa-eye"></i> ${blog.views} 阅读</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="blog-content-wrapper">
+                        <div class="blog-content">
+                            ${formattedContent}
+                        </div>
+                        <div class="blog-tags">
+                            ${blog.tags.map(tag => `<span class="blog-tag">${tag}</span>`).join('')}
+                        </div>
+                        <div class="blog-actions">
+                            <div class="blog-action like"><i class="far fa-heart"></i> 点赞 (${blog.likes})</div>
+                            <div class="blog-action bookmark"><i class="far fa-bookmark"></i> 收藏</div>
+                            <div class="blog-action share"><i class="fas fa-share-alt"></i> 分享</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="author-section">
+                    <img src="${author.avatar}" alt="${author.nickname}" class="author-avatar">
+                    <div class="author-info">
+                        <div class="author-name">${author.nickname}</div>
+                        <div class="author-bio">${author.occupation} · ${author.location}</div>
+                        <button class="follow-btn">关注作者</button>
+                    </div>
+                </div>
+            `;
+            
+            // 添加事件监听器
+            const likeButton = contentContainer.querySelector('.blog-action.like');
+            likeButton.addEventListener('click', function() {
+                const icon = this.querySelector('i');
+                if (icon.classList.contains('far')) {
+                    icon.classList.replace('far', 'fas');
+                    this.innerHTML = `<i class="fas fa-heart"></i> 已点赞 (${blog.likes + 1})`;
+                } else {
+                    icon.classList.replace('fas', 'far');
+                    this.innerHTML = `<i class="far fa-heart"></i> 点赞 (${blog.likes})`;
+                }
+            });
+            
+            const bookmarkButton = contentContainer.querySelector('.blog-action.bookmark');
+            bookmarkButton.addEventListener('click', function() {
+                const icon = this.querySelector('i');
+                if (icon.classList.contains('far')) {
+                    icon.classList.replace('far', 'fas');
+                    this.innerHTML = `<i class="fas fa-bookmark"></i> 已收藏`;
+                } else {
+                    icon.classList.replace('fas', 'far');
+                    this.innerHTML = `<i class="far fa-bookmark"></i> 收藏`;
+                }
+            });
+            
+            const shareButton = contentContainer.querySelector('.blog-action.share');
+            shareButton.addEventListener('click', function() {
+                alert('分享功能开发中，敬请期待！');
+            });
+            
+            const followButton = contentContainer.querySelector('.follow-btn');
+            followButton.addEventListener('click', function() {
+                if (this.textContent === '关注作者') {
+                    this.textContent = '已关注';
+                    this.style.background = '#4caf50';
+                } else {
+                    this.textContent = '关注作者';
+                    this.style.background = 'linear-gradient(45deg, #1a237e, #e65100)';
+                }
+            });
+        }
+        
+        // 渲染相关博客
+        function renderRelatedBlogs(blogs) {
+            if (!blogs || blogs.length === 0) return;
+            
+            const contentContainer = document.getElementById('blog-detail-content');
+            
+            const relatedSection = document.createElement('div');
+            relatedSection.className = 'related-blogs';
+            
+            relatedSection.innerHTML = `
+                <h2 class="section-title">相关推荐</h2>
+                <div class="related-blogs-grid">
+                    ${blogs.map(blog => `
+                        <div class="related-blog-card">
+                            <img src="${blog.coverImage}" alt="${blog.title}" class="related-blog-image">
+                            <div class="related-blog-content">
+                                <div class="related-blog-title">${blog.title}</div>
+                                <div class="related-blog-meta">
+                                    <span><i class="fas fa-user"></i> ${blog.authorName}</span>
+                                    <span><i class="far fa-calendar-alt"></i> ${blog.date}</span>
+                                </div>
+                                <a href="blog-detail.html?id=${blog.id}" style="text-decoration: none; color: #1a237e; font-size: 14px;">阅读全文 →</a>
+                            </div>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+            
+            contentContainer.appendChild(relatedSection);
+        }
+    </script>
+</body>
+</html> 

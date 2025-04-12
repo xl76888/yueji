@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>城市旅游记录 - 莹磊悦行</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Microsoft YaHei', sans-serif;
+            background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
+            color: #333;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 15px 0;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .logo h1 {
+            font-size: 24px;
+            color: #3a6ea5;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 20px;
+        }
+        
+        .nav-links a {
+            text-decoration: none;
+            color: #555;
+            font-weight: 500;
+            transition: color 0.3s;
+            font-size: 16px;
+        }
+        
+        .nav-links a:hover {
+            color: #3a6ea5;
+        }
+        
+        .city-header {
+            text-align: center;
+            margin: 30px 0;
+        }
+        
+        .city-header h1 {
+            font-size: 36px;
+            color: #3a6ea5;
+            margin-bottom: 10px;
+        }
+        
+        .city-header p {
+            color: #666;
+            font-size: 18px;
+        }
+        
+        .travel-records {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .record-card {
+            background-color: #fff;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            height: 240px;
+            min-height: 200px;
+            will-change: transform;
+        }
+        
+        /* 隐藏左上角的图片元素 */
+        .record-card img {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            opacity: 0;
+            pointer-events: none;
+            visibility: hidden;
+        }
+        
+        /* 渐变背景效果 */
+        .record-img {
+            height: 100%;
+            width: 100%;
+            overflow: hidden;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 1;
+        }
+        
+        /* 不同卡片使用不同的渐变背景 */
+        .record-card:nth-child(3n+1) .record-img {
+            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+        }
+        
+        .record-card:nth-child(3n+2) .record-img {
+            background: linear-gradient(135deg, #f83600 0%, #f9d423 100%);
+        }
+        
+        .record-card:nth-child(3n+3) .record-img {
+            background: linear-gradient(135deg, #00b09b 0%, #96c93d 100%);
+        }
+        
+        /* 卡片悬停效果 */
+        .record-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+            z-index: 2;
+        }
+        
+        /* 底部渐变阴影 */
+        .record-img::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 70%;
+            background: linear-gradient(to top, rgba(0,0,0,0.7), transparent);
+            z-index: 1;
+            transition: opacity 0.3s ease;
+        }
+        
+        .record-card:hover .record-img::after {
+            opacity: 0;
+        }
+        
+        /* 修改内容样式 */
+        .record-content {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            padding: 25px;
+            color: #fff;
+            z-index: 5;
+            transition: transform 0.3s ease;
+            max-height: calc(100% - 20px); /* 留出空间防止内容溢出 */
+            overflow: hidden; /* 隐藏溢出内容 */
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .record-card:hover .record-content {
+            transform: translateY(-5px);
+        }
+        
+        .record-title {
+            font-size: 24px; /* 减小字体大小 */
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: #fff;
+            text-shadow: 2px 2px 10px rgba(0,0,0,0.7);
+            position: relative;
+            display: inline-block;
+            padding-left: 35px;
+            white-space: nowrap; /* 防止标题换行 */
+            overflow: hidden; /* 隐藏溢出内容 */
+            text-overflow: ellipsis; /* 溢出时显示省略号 */
+            max-width: 100%; /* 限制最大宽度 */
+        }
+        
+        /* 标题前的图标 */
+        .record-title::before {
+            content: '\f3c5';
+            font-family: 'Font Awesome 5 Free';
+            font-weight: 900;
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 20px; /* 减小图标大小 */
+            color: #fff;
+            opacity: 0.9;
+            transition: all 0.4s ease;
+            z-index: 5;
+        }
+        
+        .record-card:hover .record-title::before {
+            transform: translateY(-50%) scale(1.2);
+            text-shadow: 0 0 15px rgba(255,255,255,0.8);
+        }
+        
+        /* 标题下划线 */
+        .record-title::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 35px;
+            width: 0;
+            height: 3px;
+            background: #fff;
+            transition: width 0.3s ease;
+            border-radius: 2px;
+        }
+        
+        .record-card:hover .record-title::after {
+            width: calc(100% - 35px);
+        }
+        
+        /* 元信息样式 */
+        .record-meta {
+            display: flex;
+            justify-content: flex-start;
+            margin-bottom: 15px;
+            font-size: 15px;
+            color: #fff;
+            opacity: 0.8;
+            transition: opacity 0.3s ease;
+            font-weight: 500;
+        }
+        
+        .record-meta span {
+            margin-right: 15px;
+        }
+        
+        .record-card:hover .record-meta {
+            opacity: 1;
+        }
+        
+        /* 描述文本 */
+        .record-desc {
+            color: #fff;
+            margin-bottom: 15px;
+            line-height: 1.4; /* 减小行间距 */
+            text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+            opacity: 0.8;
+            transition: opacity 0.3s ease;
+            display: -webkit-box;
+            -webkit-line-clamp: 3; /* 最多显示3行 */
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            font-size: 14px; /* 减小字体大小 */
+        }
+        
+        /* 卡片展开状态显示更多行 */
+        .record-card:hover .record-desc {
+            opacity: 1;
+            -webkit-line-clamp: 4; /* 悬停时显示4行 */
+        }
+        
+        /* 按钮样式 */
+        .btn {
+            display: inline-block;
+            padding: 6px 15px; /* 减小内边距 */
+            background: rgba(255,255,255,0.25);
+            color: #fff;
+            text-decoration: none;
+            border-radius: 20px;
+            font-weight: 500;
+            transition: background-color 0.3s ease;
+            border: 1px solid rgba(255,255,255,0.1);
+            text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+            font-size: 14px; /* 减小字体大小 */
+            margin-top: auto; /* 推到底部 */
+            align-self: flex-start; /* 靠左对齐 */
+        }
+        
+        .btn:hover {
+            background: #fff;
+            color: #3a6ea5;
+            text-shadow: none;
+        }
+        
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            margin-bottom: 20px;
+            color: #3a6ea5;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        
+        .back-btn i {
+            margin-right: 8px;
+        }
+        
+        footer {
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 20px 0;
+            margin-top: 50px;
+            text-align: center;
+            color: #666;
+        }
+        
+        @media (max-width: 768px) {
+            .travel-records {
+                grid-template-columns: 1fr;
+            }
+            
+            .city-header h1 {
+                font-size: 28px;
+            }
+        }
+        
+        /* 添加响应式布局优化 */
+        @media (max-width: 992px) {
+            .travel-records {
+                grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            }
+            
+            .record-title {
+                font-size: 22px; /* 进一步减小标题 */
+            }
+            
+            .record-desc {
+                -webkit-line-clamp: 2; /* 默认最多显示2行 */
+                font-size: 13px;
+            }
+            
+            .record-card:hover .record-desc {
+                -webkit-line-clamp: 3; /* 悬停最多显示3行 */
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .record-content {
+                padding: 20px 15px; /* 减小内边距 */
+            }
+            
+            .record-title {
+                font-size: 20px;
+                padding-left: 30px;
+            }
+            
+            .record-title::before {
+                font-size: 18px;
+            }
+            
+            .record-meta {
+                font-size: 13px;
+            }
+            
+            .record-desc {
+                font-size: 12px;
+                margin-bottom: 10px;
+            }
+            
+            .btn {
+                padding: 5px 12px;
+                font-size: 13px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <div class="logo">
+                <h1><i class="fas fa-map-marked-alt"></i> 莹磊悦行</h1>
+            </div>
+            <div class="nav-links">
+                <a href="index.html">首页</a>
+                <a href="travel.html">旅游攻略</a>
+                <a href="memories.html">回忆相册</a>
+                <a href="login.html">登录</a>
+            </div>
+        </div>
+    </header>
+    
+    <div class="container">
+        <a href="travel.html" class="back-btn"><i class="fas fa-arrow-left"></i> 返回城市列表</a>
+        
+        <div class="city-header">
+            <h1 id="city-name">苏州</h1>
+            <p id="city-desc">江南水乡，园林之城</p>
+        </div>
+        
+        <div class="travel-records">
+            <!-- 苏州一日游攻略 -->
+            <div class="record-card">
+                <div class="record-img">
+                    <img src="images/spots/suzhou_overview.jpg" alt="苏州一日游">
+                </div>
+                <div class="record-content">
+                    <h3 class="record-title">苏州一日游攻略</h3>
+                    <div class="record-meta">
+                        <span><i class="far fa-calendar-alt"></i> 2025-04-05</span>
+                        <span><i class="far fa-user"></i> 小磊 & 小莹</span>
+                    </div>
+                    <p class="record-desc">游览东山景区与西山景区的经典景点，品尝地道太湖菜，感受姑苏城的园林魅力和水乡韵味。景点包括雕花楼、东山古寺、东山沙滩等。</p>
+                    <a href="suzhou_1day.html" class="btn">查看攻略</a>
+                </div>
+            </div>
+            
+            <!-- 添加苏州园林游记录 -->
+            <div class="record-card">
+                <div class="record-img">
+                    <img src="images/spots/garden.jpg" alt="苏州园林之旅">
+                </div>
+                <div class="record-content">
+                    <h3 class="record-title">苏州园林之旅</h3>
+                    <div class="record-meta">
+                        <span><i class="far fa-calendar-alt"></i> 2024-10-15</span>
+                        <span><i class="far fa-user"></i> 小莹</span>
+                    </div>
+                    <p class="record-desc">探访狮子林、拙政园、留园等苏州著名古典园林，领略"咫尺之内再造乾坤"的园林艺术，体验江南园林之美。</p>
+                    <a href="#" class="btn">计划中</a>
+                </div>
+            </div>
+            
+            <!-- 添加平江路文化之旅 -->
+            <div class="record-card">
+                <div class="record-img">
+                    <img src="images/spots/pingjiang.jpg" alt="平江路文化之旅">
+                </div>
+                <div class="record-content">
+                    <h3 class="record-title">平江路文化之旅</h3>
+                    <div class="record-meta">
+                        <span><i class="far fa-calendar-alt"></i> 2024-08-20</span>
+                        <span><i class="far fa-user"></i> 小磊</span>
+                    </div>
+                    <p class="record-desc">漫步千年古街平江路，探访评弹馆、昆曲馆，品尝特色苏式点心，在小桥流水人家中感受悠久的吴文化底蕴。</p>
+                    <a href="#" class="btn">计划中</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <footer>
+        <p>&copy; 2023 莹磊悦行 - 记录旅途中的每一刻美好</p>
+    </footer>
+    
+    <script>
+        // 从URL获取城市参数
+        document.addEventListener('DOMContentLoaded', function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const city = urlParams.get('city');
+            
+            // 如果URL中有城市参数，更新页面内容
+            if (city) {
+                updateCityContent(city);
+            }
+            
+            // 为卡片添加点击事件
+            document.querySelectorAll('.record-card').forEach(card => {
+                const link = card.querySelector('.btn').getAttribute('href');
+                card.addEventListener('click', function(e) {
+                    // 如果点击的是按钮本身，让按钮的链接正常工作
+                    if (e.target.classList.contains('btn') || e.target.closest('.btn')) {
+                        return;
+                    }
+                    // 否则整个卡片都可点击
+                    window.location.href = link;
+                });
+            });
+        });
+        
+        // 更新城市内容
+        function updateCityContent(city) {
+            const cityNameElem = document.getElementById('city-name');
+            const cityDescElem = document.getElementById('city-desc');
+            
+            // 根据城市名称设置页面内容
+            switch(city) {
+                case 'suzhou':
+                    document.title = '苏州旅行记录 - 莹磊悦行';
+                    cityNameElem.textContent = '苏州';
+                    cityDescElem.textContent = '江南水乡，园林之城';
+                    
+                    // 更新苏州的攻略卡片内容
+                    updateSuzhouContent();
+                    break;
+                    
+                case 'hangzhou':
+                    document.title = '杭州旅行记录 - 莹磊悦行';
+                    cityNameElem.textContent = '杭州';
+                    cityDescElem.textContent = '上有天堂，下有苏杭';
+                    
+                    // 清除苏州的特定卡片，添加杭州的内容
+                    clearRecords();
+                    addHangzhouRecords();
+                    break;
+                    
+                case 'nanjing':
+                    document.title = '南京旅行记录 - 莹磊悦行';
+                    cityNameElem.textContent = '南京';
+                    cityDescElem.textContent = '六朝古都，山水城林';
+                    
+                    // 清除苏州的特定卡片，添加南京的内容
+                    clearRecords();
+                    addNanjingRecords();
+                    break;
+                    
+                case 'shanghai':
+                    document.title = '上海旅行记录 - 莹磊悦行';
+                    cityNameElem.textContent = '上海';
+                    cityDescElem.textContent = '魔都魅力，中西合璧';
+                    
+                    // 清除苏州的特定卡片，添加上海的内容
+                    clearRecords();
+                    addShanghaiRecords();
+                    break;
+                    
+                case 'wuxi':
+                    document.title = '无锡旅行记录 - 莹磊悦行';
+                    cityNameElem.textContent = '无锡';
+                    cityDescElem.textContent = '太湖明珠，锡商故里';
+                    
+                    // 清除苏州的特定卡片，添加无锡的内容
+                    clearRecords();
+                    addWuxiRecords();
+                    break;
+                    
+                case 'ningbo':
+                    document.title = '宁波旅行记录 - 莹磊悦行';
+                    cityNameElem.textContent = '宁波';
+                    cityDescElem.textContent = '海丝古港，文化名城';
+                    
+                    // 清除苏州的特定卡片，添加宁波的内容
+                    clearRecords();
+                    addNingboRecords();
+                    break;
+                    
+                default:
+                    // 默认内容
+                    document.title = '城市旅行记录 - 莹磊悦行';
+                    cityNameElem.textContent = '城市记录';
+                    cityDescElem.textContent = '探索世界的每一处精彩';
+            }
+        }
+        
+        // 更新苏州特定内容
+        function updateSuzhouContent() {
+            // 已有苏州的卡片内容，无需清除和添加
+            // 可以在这里添加额外的苏州特定内容
+            console.log('已更新苏州内容');
+        }
+        
+        // 清除已有的记录卡片
+        function clearRecords() {
+            const recordsContainer = document.querySelector('.travel-records');
+            recordsContainer.innerHTML = '';
+        }
+        
+        // 添加杭州记录
+        function addHangzhouRecords() {
+            const recordsContainer = document.querySelector('.travel-records');
+            
+            recordsContainer.innerHTML += `
+                <div class="record-card">
+                    <div class="record-img"></div>
+                    <div class="record-content">
+                        <h3 class="record-title">西湖漫游</h3>
+                        <div class="record-meta">
+                            <span><i class="far fa-calendar-alt"></i> 2024-06-20</span>
+                            <span><i class="far fa-user"></i> 小磊 & 小莹</span>
+                        </div>
+                        <p class="record-desc">游览西湖十景，体验断桥残雪、平湖秋月、三潭印月等绝景，漫步苏堤春晓，品尝龙井茶和杭帮菜。</p>
+                        <a href="#" class="btn">计划中</a>
+                    </div>
+                </div>
+                
+                <div class="record-card">
+                    <div class="record-img"></div>
+                    <div class="record-content">
+                        <h3 class="record-title">灵隐寺&飞来峰</h3>
+                        <div class="record-meta">
+                            <span><i class="far fa-calendar-alt"></i> 2024-07-15</span>
+                            <span><i class="far fa-user"></i> 小莹</span>
+                        </div>
+                        <p class="record-desc">探访江南古刹灵隐寺，欣赏飞来峰摩崖石刻，感受佛教文化的庄严与神秘，体验山林禅意。</p>
+                        <a href="#" class="btn">计划中</a>
+                    </div>
+                </div>
+            `;
+        }
+        
+        // 添加南京记录
+        function addNanjingRecords() {
+            const recordsContainer = document.querySelector('.travel-records');
+            
+            recordsContainer.innerHTML += `
+                <div class="record-card">
+                    <div class="record-img"></div>
+                    <div class="record-content">
+                        <h3 class="record-title">南京历史之旅</h3>
+                        <div class="record-meta">
+                            <span><i class="far fa-calendar-alt"></i> 2024-05-10</span>
+                            <span><i class="far fa-user"></i> 小磊</span>
+                        </div>
+                        <p class="record-desc">参观中山陵、总统府、明孝陵等历史遗迹，追溯六朝至民国的历史变迁，感受深厚的文化底蕴。</p>
+                        <a href="#" class="btn">计划中</a>
+                    </div>
+                </div>
+            `;
+        }
+        
+        // 添加上海记录
+        function addShanghaiRecords() {
+            const recordsContainer = document.querySelector('.travel-records');
+            
+            recordsContainer.innerHTML += `
+                <div class="record-card">
+                    <div class="record-img"></div>
+                    <div class="record-content">
+                        <h3 class="record-title">上海城市风光</h3>
+                        <div class="record-meta">
+                            <span><i class="far fa-calendar-alt"></i> 2024-09-18</span>
+                            <span><i class="far fa-user"></i> 小磊 & 小莹</span>
+                        </div>
+                        <p class="record-desc">游览外滩、陆家嘴金融区、南京路步行街、田子坊等地标，感受魔都的繁华与包容，品尝各式美食。</p>
+                        <a href="#" class="btn">计划中</a>
+                    </div>
+                </div>
+            `;
+        }
+        
+        // 添加无锡记录
+        function addWuxiRecords() {
+            const recordsContainer = document.querySelector('.travel-records');
+            
+            recordsContainer.innerHTML += `
+                <div class="record-card">
+                    <div class="record-img"></div>
+                    <div class="record-content">
+                        <h3 class="record-title">太湖风光</h3>
+                        <div class="record-meta">
+                            <span><i class="far fa-calendar-alt"></i> 2024-08-08</span>
+                            <span><i class="far fa-user"></i> 小莹</span>
+                        </div>
+                        <p class="record-desc">游览鼋头渚、蠡园、灵山大佛等景点，赏太湖美景，感受佛教文化，品尝无锡特色美食。</p>
+                        <a href="#" class="btn">计划中</a>
+                    </div>
+                </div>
+            `;
+        }
+        
+        // 添加宁波记录
+        function addNingboRecords() {
+            const recordsContainer = document.querySelector('.travel-records');
+            
+            recordsContainer.innerHTML += `
+                <div class="record-card">
+                    <div class="record-img"></div>
+                    <div class="record-content">
+                        <h3 class="record-title">宁波古城探秘</h3>
+                        <div class="record-meta">
+                            <span><i class="far fa-calendar-alt"></i> 2024-10-22</span>
+                            <span><i class="far fa-user"></i> 小磊</span>
+                        </div>
+                        <p class="record-desc">游览天一阁、月湖公园、鼓楼等历史文化景点，体验海港城市的独特魅力，品尝海鲜美食。</p>
+                        <a href="#" class="btn">计划中</a>
+                    </div>
+                </div>
+            `;
+        }
+    </script>
+</body>
+</html> 

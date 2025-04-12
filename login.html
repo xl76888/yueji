@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="referrer" content="never">
+    <base href="./">
+    <title>莹磊悦行 - 用户登录</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Microsoft YaHei', sans-serif;
+            background: linear-gradient(135deg, #1a237e 0%, #e65100 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #333;
+            padding: 20px;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 900px;
+            display: flex;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 15px 50px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+        
+        .login-img {
+            width: 50%;
+            background-image: url('images/spots/shantang.jpg');
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+        
+        .login-img::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(26, 35, 126, 0.3);
+        }
+        
+        .login-img-text {
+            position: absolute;
+            bottom: 30px;
+            left: 30px;
+            right: 30px;
+            color: white;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
+        }
+        
+        .login-img-title {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+        
+        .login-img-subtitle {
+            font-size: 16px;
+            line-height: 1.6;
+        }
+        
+        .login-form {
+            width: 50%;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .login-logo {
+            font-size: 28px;
+            font-weight: 700;
+            color: #1a237e;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .login-title {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 30px;
+            text-align: center;
+            color: #333;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 14px;
+            color: #555;
+        }
+        
+        .form-input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+        
+        .form-input:focus {
+            border-color: #1a237e;
+            box-shadow: 0 0 0 2px rgba(26, 35, 126, 0.2);
+            outline: none;
+        }
+        
+        .input-group {
+            position: relative;
+        }
+        
+        .input-icon {
+            position: absolute;
+            top: 50%;
+            left: 15px;
+            transform: translateY(-50%);
+            color: #777;
+        }
+        
+        .input-with-icon {
+            padding-left: 45px;
+        }
+        
+        .form-link {
+            text-align: right;
+            margin-bottom: 20px;
+        }
+        
+        .form-link a {
+            color: #1a237e;
+            text-decoration: none;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+        
+        .form-link a:hover {
+            color: #e65100;
+            text-decoration: underline;
+        }
+        
+        .submit-btn {
+            background: linear-gradient(45deg, #1a237e, #e65100);
+            color: white;
+            border: none;
+            padding: 14px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-bottom: 20px;
+        }
+        
+        .submit-btn:hover {
+            background: linear-gradient(45deg, #0d1642, #b84000);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .divider {
+            display: flex;
+            align-items: center;
+            margin: 20px 0;
+        }
+        
+        .divider-line {
+            flex: 1;
+            height: 1px;
+            background: #ddd;
+        }
+        
+        .divider-text {
+            padding: 0 15px;
+            font-size: 14px;
+            color: #777;
+        }
+        
+        .social-login {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .social-btn {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 22px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .social-btn.wechat {
+            background: #07C160;
+        }
+        
+        .social-btn.weibo {
+            background: #E6162D;
+        }
+        
+        .social-btn.qq {
+            background: #12B7F5;
+        }
+        
+        .social-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .register-link {
+            text-align: center;
+            font-size: 14px;
+            color: #555;
+        }
+        
+        .register-link a {
+            color: #1a237e;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        .register-link a:hover {
+            color: #e65100;
+            text-decoration: underline;
+        }
+        
+        .back-link {
+            display: none;
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            color: white;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 15px;
+            background: rgba(0,0,0,0.3);
+            border-radius: 20px;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            z-index: 10;
+        }
+        
+        .back-link:hover {
+            background: rgba(0,0,0,0.5);
+            transform: translateY(-2px);
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+                max-width: 400px;
+            }
+            
+            .login-img, .login-form {
+                width: 100%;
+            }
+            
+            .login-img {
+                height: 200px;
+            }
+            
+            .login-form {
+                padding: 30px;
+            }
+            
+            .back-link {
+                top: 10px;
+                left: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="login-img">
+            <div class="login-img-text">
+                <div class="login-img-title">记录旅途中的每一段精彩故事</div>
+                <div class="login-img-subtitle">加入莹磊悦行，开启你的独特旅行体验</div>
+            </div>
+        </div>
+        
+        <div class="login-form">
+            <div class="login-logo">莹磊悦行</div>
+            <div class="login-title">用户登录</div>
+            
+            <div class="form-group">
+                <label class="form-label">用户名</label>
+                <div class="input-group">
+                    <i class="fas fa-user input-icon"></i>
+                    <input type="text" class="form-input input-with-icon" placeholder="请输入用户名">
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label class="form-label">密码</label>
+                <div class="input-group">
+                    <i class="fas fa-lock input-icon"></i>
+                    <input type="password" class="form-input input-with-icon" placeholder="请输入密码">
+                </div>
+            </div>
+            
+            <div class="form-link">
+                <a href="#">忘记密码？</a>
+            </div>
+            
+            <button class="submit-btn">登录</button>
+            
+            <div class="divider">
+                <div class="divider-line"></div>
+                <div class="divider-text">或者使用</div>
+                <div class="divider-line"></div>
+            </div>
+            
+            <div class="social-login">
+                <div class="social-btn wechat">
+                    <i class="fab fa-weixin"></i>
+                </div>
+                <div class="social-btn weibo">
+                    <i class="fab fa-weibo"></i>
+                </div>
+                <div class="social-btn qq">
+                    <i class="fab fa-qq"></i>
+                </div>
+            </div>
+            
+            <div class="register-link">
+                还没有账号？<a href="register.html">立即注册</a>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // 检查是否已经登录，如果已登录则直接跳转到首页
+            const currentUser = localStorage.getItem('currentUser');
+            if (currentUser) {
+                window.location.href = 'index.html';
+            }
+            
+            // 忘记密码功能
+            const forgotPasswordLink = document.querySelector('.form-link a');
+            forgotPasswordLink.addEventListener('click', function(e) {
+                e.preventDefault();
+                const username = document.querySelector('input[type="text"]').value;
+                if (!username) {
+                    alert('请先输入用户名，我们将向您的邮箱发送重置密码链接');
+                    return;
+                }
+                
+                alert(`密码重置链接已发送到与账户 "${username}" 关联的邮箱，请查收。\n\n提示：您可以使用默认密码"123456"登录`);
+            });
+            
+            // 登录按钮点击事件
+            const loginButton = document.querySelector('.submit-btn');
+            loginButton.addEventListener('click', function() {
+                const username = document.querySelector('input[type="text"]').value;
+                const password = document.querySelector('input[type="password"]').value;
+                
+                if (!username || !password) {
+                    alert('请输入用户名和密码');
+                    return;
+                }
+                
+                // 模拟登录，修改为更灵活的验证方式
+                if (password === '123456') {
+                    alert('登录成功，正在跳转到首页...');
+                    localStorage.setItem('currentUser', username);
+                    // 直接跳转到首页
+                    window.location.href = 'index.html';
+                } else {
+                    alert('密码错误（提示：请使用密码"123456"登录）');
+                }
+            });
+            
+            // 社交登录按钮点击事件
+            const socialButtons = document.querySelectorAll('.social-btn');
+            socialButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    alert('社交登录功能开发中，敬请期待！');
+                });
+            });
+            
+            // 为用户名密码输入框添加回车键登录功能
+            const passwordInput = document.querySelector('input[type="password"]');
+            passwordInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    loginButton.click();
+                }
+            });
+        });
+    </script>
+</body>
+</html> 

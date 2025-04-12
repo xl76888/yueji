@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="referrer" content="never">
+    <base href="./">
+    <title>莹磊悦行 - 用户注册</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Microsoft YaHei', sans-serif;
+            background: linear-gradient(135deg, #1a237e 0%, #e65100 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #333;
+            padding: 20px;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 900px;
+            display: flex;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 15px 50px rgba(0,0,0,0.3);
+            overflow: hidden;
+            flex-direction: row-reverse;
+        }
+        
+        .register-img {
+            width: 50%;
+            background-image: url('images/spots/tianping.jpg');
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+        
+        .register-img::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(26, 35, 126, 0.3);
+        }
+        
+        .register-img-text {
+            position: absolute;
+            bottom: 30px;
+            left: 30px;
+            right: 30px;
+            color: white;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
+        }
+        
+        .register-img-title {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+        
+        .register-img-subtitle {
+            font-size: 16px;
+            line-height: 1.6;
+        }
+        
+        .register-form {
+            width: 50%;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .register-logo {
+            font-size: 28px;
+            font-weight: 700;
+            color: #1a237e;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .register-title {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 30px;
+            text-align: center;
+            color: #333;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 14px;
+            color: #555;
+        }
+        
+        .form-input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+        
+        .form-input:focus {
+            border-color: #1a237e;
+            box-shadow: 0 0 0 2px rgba(26, 35, 126, 0.2);
+            outline: none;
+        }
+        
+        .input-group {
+            position: relative;
+        }
+        
+        .input-icon {
+            position: absolute;
+            top: 50%;
+            left: 15px;
+            transform: translateY(-50%);
+            color: #777;
+        }
+        
+        .input-with-icon {
+            padding-left: 45px;
+        }
+        
+        .terms {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            margin-bottom: 20px;
+            font-size: 14px;
+            color: #555;
+            line-height: 1.5;
+        }
+        
+        .terms input {
+            margin-top: 3px;
+        }
+        
+        .terms a {
+            color: #1a237e;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        .terms a:hover {
+            color: #e65100;
+            text-decoration: underline;
+        }
+        
+        .submit-btn {
+            background: linear-gradient(45deg, #1a237e, #e65100);
+            color: white;
+            border: none;
+            padding: 14px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-bottom: 20px;
+        }
+        
+        .submit-btn:hover {
+            background: linear-gradient(45deg, #0d1642, #b84000);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .divider {
+            display: flex;
+            align-items: center;
+            margin: 20px 0;
+        }
+        
+        .divider-line {
+            flex: 1;
+            height: 1px;
+            background: #ddd;
+        }
+        
+        .divider-text {
+            padding: 0 15px;
+            font-size: 14px;
+            color: #777;
+        }
+        
+        .social-login {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .social-btn {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 22px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .social-btn.wechat {
+            background: #07C160;
+        }
+        
+        .social-btn.weibo {
+            background: #E6162D;
+        }
+        
+        .social-btn.qq {
+            background: #12B7F5;
+        }
+        
+        .social-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .login-link {
+            text-align: center;
+            font-size: 14px;
+            color: #555;
+        }
+        
+        .login-link a {
+            color: #1a237e;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        .login-link a:hover {
+            color: #e65100;
+            text-decoration: underline;
+        }
+        
+        .back-link {
+            display: none;
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            color: white;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 15px;
+            background: rgba(0,0,0,0.3);
+            border-radius: 20px;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            z-index: 10;
+        }
+        
+        .back-link:hover {
+            background: rgba(0,0,0,0.5);
+            transform: translateY(-2px);
+        }
+        
+        .password-strength {
+            height: 5px;
+            background: #eee;
+            border-radius: 3px;
+            margin-top: 10px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .password-strength-bar {
+            height: 100%;
+            width: 0;
+            background: #e65100;
+            transition: all 0.3s ease;
+        }
+        
+        .password-tips {
+            font-size: 12px;
+            margin-top: 5px;
+            color: #777;
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+                max-width: 400px;
+            }
+            
+            .register-img, .register-form {
+                width: 100%;
+            }
+            
+            .register-img {
+                height: 200px;
+                order: -1;
+            }
+            
+            .register-form {
+                padding: 30px;
+            }
+            
+            .back-link {
+                top: 10px;
+                left: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="register-img">
+            <div class="register-img-text">
+                <div class="register-img-title">分享旅行的美好瞬间</div>
+                <div class="register-img-subtitle">创建你的专属旅行空间，记录每一段旅途故事</div>
+            </div>
+        </div>
+        
+        <div class="register-form">
+            <div class="register-logo">莹磊悦行</div>
+            <div class="register-title">创建新账号</div>
+            
+            <div class="form-group">
+                <label class="form-label">用户名</label>
+                <div class="input-group">
+                    <i class="fas fa-user input-icon"></i>
+                    <input type="text" class="form-input input-with-icon" id="username" placeholder="请设置用户名">
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label class="form-label">电子邮箱</label>
+                <div class="input-group">
+                    <i class="fas fa-envelope input-icon"></i>
+                    <input type="email" class="form-input input-with-icon" id="email" placeholder="请输入邮箱地址">
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label class="form-label">密码</label>
+                <div class="input-group">
+                    <i class="fas fa-lock input-icon"></i>
+                    <input type="password" class="form-input input-with-icon" id="password" placeholder="请设置密码">
+                </div>
+                <div class="password-strength">
+                    <div class="password-strength-bar" id="password-strength-bar"></div>
+                </div>
+                <div class="password-tips" id="password-tips">密码强度: 请设置密码</div>
+            </div>
+            
+            <div class="form-group">
+                <label class="form-label">确认密码</label>
+                <div class="input-group">
+                    <i class="fas fa-check-circle input-icon"></i>
+                    <input type="password" class="form-input input-with-icon" id="confirm-password" placeholder="请再次输入密码">
+                </div>
+            </div>
+            
+            <div class="terms">
+                <input type="checkbox" id="terms-check">
+                <label for="terms-check">我已阅读并同意 <a href="#">用户协议</a> 和 <a href="#">隐私政策</a></label>
+            </div>
+            
+            <button class="submit-btn">注册账号</button>
+            
+            <div class="divider">
+                <div class="divider-line"></div>
+                <div class="divider-text">或者使用</div>
+                <div class="divider-line"></div>
+            </div>
+            
+            <div class="social-login">
+                <div class="social-btn wechat">
+                    <i class="fab fa-weixin"></i>
+                </div>
+                <div class="social-btn weibo">
+                    <i class="fab fa-weibo"></i>
+                </div>
+                <div class="social-btn qq">
+                    <i class="fab fa-qq"></i>
+                </div>
+            </div>
+            
+            <div class="login-link">
+                已有账号？<a href="login.html">立即登录</a>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // 检查是否已经登录，如果已登录则直接跳转到首页
+            const currentUser = localStorage.getItem('currentUser');
+            if (currentUser) {
+                window.location.href = 'index.html';
+            }
+            
+            // 密码强度检测
+            const passwordInput = document.getElementById('password');
+            const strengthBar = document.getElementById('password-strength-bar');
+            const strengthTips = document.getElementById('password-tips');
+            
+            passwordInput.addEventListener('input', function() {
+                const password = this.value;
+                let strength = 0;
+                let tips = '';
+                
+                if (password.length === 0) {
+                    strengthBar.style.width = '0%';
+                    strengthTips.textContent = '密码强度: 请设置密码';
+                    return;
+                }
+                
+                // 检查密码长度
+                if (password.length > 6) strength += 1;
+                if (password.length > 10) strength += 1;
+                
+                // 检查字符种类
+                if (/[A-Z]/.test(password)) strength += 1;
+                if (/[a-z]/.test(password)) strength += 1;
+                if (/[0-9]/.test(password)) strength += 1;
+                if (/[^A-Za-z0-9]/.test(password)) strength += 1;
+                
+                // 设置强度条和提示
+                switch(true) {
+                    case (strength <= 2):
+                        strengthBar.style.width = '25%';
+                        strengthBar.style.background = '#e74c3c';
+                        tips = '密码强度: 弱';
+                        break;
+                    case (strength <= 4):
+                        strengthBar.style.width = '50%';
+                        strengthBar.style.background = '#f39c12';
+                        tips = '密码强度: 中';
+                        break;
+                    case (strength <= 6):
+                        strengthBar.style.width = '75%';
+                        strengthBar.style.background = '#3498db';
+                        tips = '密码强度: 强';
+                        break;
+                    default:
+                        strengthBar.style.width = '100%';
+                        strengthBar.style.background = '#2ecc71';
+                        tips = '密码强度: 非常强';
+                }
+                
+                strengthTips.textContent = tips;
+            });
+            
+            // 表单验证
+            const registerForm = document.querySelector('.register-form');
+            const submitBtn = document.querySelector('.submit-btn');
+            const usernameInput = document.getElementById('username');
+            const emailInput = document.getElementById('email');
+            const confirmPasswordInput = document.getElementById('confirm-password');
+            const termsCheck = document.getElementById('terms-check');
+            
+            submitBtn.addEventListener('click', function() {
+                // 验证用户名
+                if (!usernameInput.value) {
+                    alert('请输入用户名');
+                    usernameInput.focus();
+                    return;
+                }
+                
+                // 验证邮箱
+                const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (!emailInput.value || !emailPattern.test(emailInput.value)) {
+                    alert('请输入有效的邮箱地址');
+                    emailInput.focus();
+                    return;
+                }
+                
+                // 验证密码
+                if (!passwordInput.value || passwordInput.value.length < 6) {
+                    alert('密码长度需至少6个字符');
+                    passwordInput.focus();
+                    return;
+                }
+                
+                // 验证确认密码
+                if (passwordInput.value !== confirmPasswordInput.value) {
+                    alert('两次输入的密码不一致');
+                    confirmPasswordInput.focus();
+                    return;
+                }
+                
+                // 验证服务条款
+                if (!termsCheck.checked) {
+                    alert('请阅读并同意用户协议和隐私政策');
+                    return;
+                }
+                
+                // 注册成功，自动登录并跳转到首页
+                alert('注册成功！正在跳转到首页...');
+                localStorage.setItem('currentUser', usernameInput.value);
+                localStorage.setItem('registeredUser', usernameInput.value);
+                window.location.href = 'index.html';
+            });
+            
+            // 社交注册按钮点击事件
+            const socialButtons = document.querySelectorAll('.social-btn');
+            socialButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    alert('社交账号注册功能开发中，敬请期待！');
+                });
+            });
+        });
+    </script>
+</body>
+</html> 

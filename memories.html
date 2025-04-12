@@ -1,0 +1,1057 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>苏州一日游 - 回忆录</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Microsoft YaHei', sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+        }
+
+        /* 添加七彩动画效果 */
+        @keyframes rainbowText {
+            0% { color: #ff0000; text-shadow: 2px 2px 4px rgba(255, 0, 0, 0.3); }
+            14% { color: #ff8000; text-shadow: 2px 2px 4px rgba(255, 128, 0, 0.3); }
+            28% { color: #ffff00; text-shadow: 2px 2px 4px rgba(255, 255, 0, 0.3); }
+            42% { color: #00ff00; text-shadow: 2px 2px 4px rgba(0, 255, 0, 0.3); }
+            56% { color: #00ffff; text-shadow: 2px 2px 4px rgba(0, 255, 255, 0.3); }
+            70% { color: #0000ff; text-shadow: 2px 2px 4px rgba(0, 0, 255, 0.3); }
+            84% { color: #8000ff; text-shadow: 2px 2px 4px rgba(128, 0, 255, 0.3); }
+            100% { color: #ff0000; text-shadow: 2px 2px 4px rgba(255, 0, 0, 0.3); }
+        }
+
+        @keyframes iconRotate {
+            0% { transform: rotate(0deg) scale(1); }
+            50% { transform: rotate(180deg) scale(1.2); }
+            100% { transform: rotate(360deg) scale(1); }
+        }
+
+        .header {
+            background: linear-gradient(45deg, #1a2a6c, #b21f1f, #fdbb2d);
+            background-size: 200% 200%;
+            animation: gradientBG 10s ease infinite;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 28px;
+            font-weight: bold;
+            animation: rainbowText 8s linear infinite;
+            letter-spacing: 2px;
+        }
+
+        .header h1 i {
+            display: inline-block;
+            margin-right: 10px;
+            animation: iconRotate 6s ease-in-out infinite;
+            transform-origin: center;
+        }
+
+        /* 添加闪光效果 */
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                45deg,
+                transparent,
+                rgba(255, 255, 255, 0.1),
+                transparent
+            );
+            transform: rotate(45deg);
+            animation: shine 4s linear infinite;
+        }
+
+        @keyframes shine {
+            0% { transform: translateX(-100%) rotate(45deg); }
+            100% { transform: translateX(100%) rotate(45deg); }
+        }
+
+        .back-button {
+            position: absolute;
+            left: 20px;
+            top: 20px;
+            color: white;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: linear-gradient(45deg, #ff6b6b, #ff8e8e);
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-weight: 500;
+            box-shadow: 0 4px 15px rgba(255, 107, 107, 0.3);
+            transition: all 0.3s ease;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(5px);
+        }
+
+        .back-button i {
+            font-size: 16px;
+            transition: transform 0.3s ease;
+        }
+
+        .back-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 107, 107, 0.4);
+            background: linear-gradient(45deg, #ff8e8e, #ff6b6b);
+        }
+
+        .back-button:hover i {
+            transform: translateX(-5px);
+        }
+
+        .back-button:active {
+            transform: translateY(1px);
+            box-shadow: 0 2px 10px rgba(255, 107, 107, 0.3);
+        }
+
+        .gallery-container {
+            max-width: 1200px;
+            margin: 30px auto;
+            padding: 20px;
+        }
+
+        .location-section {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .location-title {
+            color: #2c3e50;
+            font-size: 20px;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #3498db;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .slideshow-button {
+            background: linear-gradient(45deg, #2ecc71, #27ae60);
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .slideshow-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+
+        .slideshow-button i {
+            font-size: 14px;
+        }
+
+        .slideshow-button.playing {
+            background: linear-gradient(45deg, #e74c3c, #c0392b);
+        }
+
+        .photo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+            padding: 10px;
+        }
+
+        .photo-item {
+            position: relative;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            min-height: 200px;
+            background-color: #f0f0f0;
+            aspect-ratio: 4/3;
+        }
+
+        .photo-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .photo-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            transition: opacity 0.3s ease;
+        }
+        
+        /* 添加加载动画 */
+        .photo-item::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 30px;
+            height: 30px;
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #3498db;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            z-index: 1;
+        }
+        
+        .photo-item.loaded::before {
+            display: none;
+        }
+        
+        @keyframes spin {
+            0% { transform: translate(-50%, -50%) rotate(0deg); }
+            100% { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+
+        /* 图片预览模态框样式 */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.9);
+            z-index: 1000;
+            cursor: pointer;
+        }
+
+        .modal-content {
+            max-width: 90%;
+            max-height: 90vh;
+            margin: auto;
+            display: block;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .close {
+            position: absolute;
+            top: 15px;
+            right: 35px;
+            color: #f1f1f1;
+            font-size: 40px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        /* 修改模态框样式 */
+        .modal-controls {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 20px;
+            z-index: 1001;
+        }
+
+        .modal-button {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 16px;
+            backdrop-filter: blur(5px);
+            transition: all 0.3s ease;
+        }
+
+        .modal-button:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .music-control {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(5px);
+            padding: 10px 20px;
+            border-radius: 30px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .music-button {
+            background: none;
+            border: none;
+            color: #2c3e50;
+            font-size: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .music-button:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: scale(1.1);
+        }
+
+        .music-button.playing {
+            color: #e74c3c;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        /* 移动端适配 */
+        @media (max-width: 768px) {
+            .gallery-container {
+                padding: 10px;
+                margin: 15px auto;
+            }
+
+            .location-section {
+                padding: 15px;
+                margin-bottom: 20px;
+            }
+
+            .location-title {
+                font-size: 18px;
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+
+            .header h1 {
+                font-size: 20px;
+            }
+
+            .photo-grid {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+                gap: 12px;
+                padding: 8px;
+            }
+
+            .photo-item {
+                min-height: 150px;
+                aspect-ratio: 1/1;
+            }
+
+            .photo-item img {
+                height: 100%;
+            }
+
+            .back-button {
+                padding: 8px 15px;
+                font-size: 14px;
+                left: 10px;
+                top: 10px;
+            }
+
+            .modal-controls {
+                bottom: 30px;
+                gap: 30px;
+            }
+
+            .modal-button {
+                width: 60px;
+                height: 60px;
+            }
+
+            .close {
+                top: 10px;
+                right: 20px;
+                font-size: 35px;
+            }
+
+            .music-control {
+                bottom: 15px;
+                right: 15px;
+                padding: 8px 12px;
+            }
+        }
+
+        /* 小屏幕手机适配 */
+        @media (max-width: 480px) {
+            .photo-grid {
+                grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+                gap: 8px;
+                padding: 5px;
+            }
+
+            .photo-item {
+                min-height: 100px;
+                border-radius: 8px;
+            }
+
+            .location-title {
+                font-size: 16px;
+            }
+
+            .slideshow-button {
+                padding: 6px 12px;
+                font-size: 12px;
+            }
+
+            .close {
+                top: 5px;
+                right: 15px;
+                font-size: 30px;
+            }
+
+            .modal-button {
+                width: 50px;
+                height: 50px;
+            }
+        }
+
+        /* 优化触摸设备交互 */
+        @media (hover: none) {
+            .photo-item:hover {
+                transform: none;
+                box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            }
+
+            .slideshow-button, .modal-button, .music-button {
+                /* 增加点击区域 */
+                min-height: 44px;
+                min-width: 44px;
+            }
+
+            .back-button:hover {
+                transform: none;
+            }
+
+            .back-button:active {
+                transform: scale(0.95);
+            }
+
+            .photo-item:active {
+                transform: scale(0.96);
+                box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+            }
+        }
+
+        /* 优化照片加载动画 */
+        .photo-item::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 30px;
+            height: 30px;
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #3498db;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            z-index: 1;
+        }
+        
+        .photo-item.loaded::before {
+            display: none;
+        }
+        
+        /* 添加照片加载失败样式 */
+        .photo-item.error::before {
+            border: none;
+            width: auto;
+            height: auto;
+            animation: none;
+            content: '加载失败';
+            color: #e74c3c;
+            font-size: 14px;
+            background: rgba(255,255,255,0.7);
+            padding: 5px 10px;
+            border-radius: 5px;
+        }
+        
+        /* 添加照片未找到样式 */
+        .no-photos {
+            text-align: center;
+            padding: 30px;
+            color: #7f8c8d;
+            font-size: 16px;
+            background: rgba(255,255,255,0.5);
+            border-radius: 10px;
+            margin: 20px auto;
+        }
+        
+        @keyframes spin {
+            0% { transform: translate(-50%, -50%) rotate(0deg); }
+            100% { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+        
+        /* 添加图片淡入效果 */
+        .photo-item img {
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+        
+        .photo-item.loaded img {
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <a href="index.html" class="back-button">
+            <i class="fas fa-arrow-left"></i>
+            返回
+        </a>
+        <h1><i class="fas fa-camera-retro"></i> 苏州一日游回忆录</h1>
+    </div>
+
+    <div class="gallery-container">
+        <div class="location-section">
+            <h2 class="location-title">
+                <span><i class="fas fa-landmark"></i> 陆巷古村</span>
+                <button class="slideshow-button" onclick="toggleSlideshow('luxianggangcun')">
+                    <i class="fas fa-play"></i> 自动播放
+                </button>
+            </h2>
+            <div class="photo-grid" id="luxianggangcun-photos">
+                <!-- 照片将通过JavaScript动态加载 -->
+            </div>
+        </div>
+
+        <div class="location-section">
+            <h2 class="location-title">
+                <span><i class="fas fa-moon"></i> 明月湾</span>
+                <button class="slideshow-button" onclick="toggleSlideshow('mingyuewan')">
+                    <i class="fas fa-play"></i> 自动播放
+                </button>
+            </h2>
+            <div class="photo-grid" id="mingyuewan-photos">
+                <!-- 照片将通过JavaScript动态加载 -->
+            </div>
+        </div>
+    </div>
+
+    <!-- 图片预览模态框 -->
+    <div id="imageModal" class="modal">
+        <span class="close">&times;</span>
+        <img class="modal-content" id="modalImage">
+        <div class="modal-controls">
+            <button class="modal-button" onclick="prevImage()"><i class="fas fa-chevron-left"></i></button>
+            <button class="modal-button" onclick="nextImage()"><i class="fas fa-chevron-right"></i></button>
+        </div>
+    </div>
+
+    <div class="music-control">
+        <button class="music-button" id="musicToggle" onclick="toggleMusic()">
+            <i class="fas fa-music"></i>
+        </button>
+    </div>
+
+    <audio id="bgMusic" loop>
+        <source src="music/background-music.mp3" type="audio/mpeg">
+    </audio>
+
+    <script>
+        // 定义图片数据 - 使用不同尺寸的图片版本
+        const luxianggangcunPhotos = [
+            'ChatGPT Image 2025年4月6日 15_29_23.png',
+            'ChatGPT Image 2025年4月6日 15_22_22.png',
+            'ChatGPT Image 2025年4月6日 15_18_18.png',
+            '522fbbc2e0c4754fc85dcfb8d535a09.jpg',
+            'b18512a58bda4b36de42d0b93a7ae2d.jpg',
+            '2984aae56e07b9ed03feb8c3dcd5146.jpg',
+            '1566464c57e09b405d69881f008649a.jpg',
+            '769b6f7cede3cf7c2e5e9011941518a.jpg',
+            'd7fd84205005ae8e977ea733e6e194e.jpg',
+            '5a2bca94c0dfa814ac34e4d5f806c9b.jpg',
+            'f71bf5a51832260b6e93d0798ba973c.jpg',
+            'ce2ccba5401d44d8c1d1875ec9aeb78.jpg',
+            'a7c4a8dc789d84433d83fea126107c8.jpg',
+            'd216f51b6e4bb74aba0ea45b46d2231.jpg',
+            '51b25b1613590f43f84a4c6dcc1f478.jpg'
+        ];
+
+        const mingyuewanPhotos = [
+            '556c1702aada701a03489ef41f278fc.jpg',
+            'd64c4a76a8298506fa8ec5ed7318910.jpg',
+            '46a9cdeedb6a048d5603946b91bd98a.jpg',
+            '0c8b02e9616def16c8a5864faa6ea70.jpg'
+        ];
+
+        // 备用图片路径 - 用于测试不同路径
+        const backupImagePaths = [
+            'images/spots/W020210817323928993643.jpg',
+            'images/spots/1636714294996851_836_10000.jpg',
+            'images/spots/1661765152353894_836_10000.jpg',
+            'images/spots/Y8YmwIH2NO.jpg',
+            'images/spots/bafe61364ba8a23137b86a6bcfe0d0e0_836_10000.jpg'
+        ];
+
+        // 检测是否为移动设备
+        const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+        
+        // 添加图片加载队列处理
+        let loadQueue = [];
+        let isLoadingImage = false;
+
+        // 获取当前仓库名称，用于GitHub Pages路径
+        function getRepoName() {
+            const pathSegments = window.location.pathname.split('/');
+            // GitHub Pages路径格式为 /<repo-name>/page.html
+            if (pathSegments.length >= 2) {
+                return pathSegments[1];
+            }
+            return '';
+        }
+        
+        // 构建GitHub Pages兼容的图片URL
+        function buildImageUrl(path, filename) {
+            // 尝试直接使用相对路径，这在大多数情况下更可靠
+            return `${path}/${filename}`;
+        }
+        
+        // 加载照片函数
+        function loadPhotos(photos, folderPath, containerId) {
+            const container = document.getElementById(containerId);
+            if (!container) {
+                console.error(`找不到容器: ${containerId}`);
+                return;
+            }
+            
+            container.innerHTML = ''; // 清空容器
+            console.log(`正在加载 ${containerId} 的照片, 路径: ${folderPath}, 数量: ${photos.length}`);
+
+            // 如果照片列表为空，显示提示信息
+            if (photos.length === 0) {
+                container.innerHTML = '<div class="no-photos">暂无照片</div>';
+                return;
+            }
+
+            // 创建所有照片元素但不立即加载
+            photos.forEach((photo, index) => {
+                const photoDiv = document.createElement('div');
+                photoDiv.className = 'photo-item';
+                photoDiv.dataset.index = index;
+                
+                const img = document.createElement('img');
+                img.loading = 'lazy'; // 添加延迟加载
+                img.alt = `照片 ${index + 1}`;
+                img.style.opacity = '0'; // 初始设置为透明
+                
+                // 直接设置data-src，稍后再加载
+                img.setAttribute('data-src', `${folderPath}/${photo}`);
+                img.setAttribute('data-location', folderPath.split('/').pop()); // 提取位置名称
+                
+                photoDiv.appendChild(img);
+                container.appendChild(photoDiv);
+                
+                // 将图片加入加载队列
+                loadQueue.push({
+                    img: img,
+                    photoDiv: photoDiv,
+                    folderPath: folderPath,
+                    photo: photo,
+                    containerId: containerId,
+                    index: index
+                });
+            });
+            
+            // 开始加载队列中的图片
+            setTimeout(loadNextImageInQueue, 100);
+            
+            // 添加调试信息，显示已添加到队列的图片数量
+            console.log(`已添加 ${photos.length} 张图片到加载队列，队列总长度: ${loadQueue.length}`);
+        }
+        
+        // 加载队列中的下一张图片
+        function loadNextImageInQueue() {
+            if (isLoadingImage || loadQueue.length === 0) return;
+            
+            isLoadingImage = true;
+            const item = loadQueue.shift();
+            const { img, photoDiv, folderPath, photo, containerId, index } = item;
+            
+            // 依次尝试多种可能的路径
+            const imgUrls = [
+                `${folderPath}/${photo}`,
+                `./${folderPath}/${photo}`,
+                `/${folderPath}/${photo}`,
+                `../${folderPath}/${photo}`
+            ];
+            
+            let currentUrlIndex = 0;
+            
+            function tryLoadImage() {
+                if (currentUrlIndex >= imgUrls.length) {
+                    // 所有URL都失败，使用占位符
+                    console.error(`所有路径尝试失败，使用占位符`);
+                    img.src = 'data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%22250%22%20height%3D%22200%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Crect%20fill%3D%22%23eee%22%20width%3D%22250%22%20height%3D%22200%22%2F%3E%3Ctext%20fill%3D%22%23999%22%20font-family%3D%22Arial%2C%20sans-serif%22%20font-size%3D%2214%22%20x%3D%2250%25%22%20y%3D%2250%25%22%20text-anchor%3D%22middle%22%20dominant-baseline%3D%22middle%22%3E%E5%9B%BE%E7%89%87%E5%8A%A0%E8%BD%BD%E5%A4%B1%E8%B4%A5%3C%2Ftext%3E%3C%2Fsvg%3E';
+                    img.style.opacity = '1';
+                    photoDiv.classList.add('loaded');
+                    isLoadingImage = false;
+                    
+                    // 继续加载下一张
+                    setTimeout(loadNextImageInQueue, 100);
+                    return;
+                }
+                
+                const currentUrl = imgUrls[currentUrlIndex];
+                console.log(`尝试加载图片: ${currentUrl}, 尝试序号: ${currentUrlIndex + 1}/${imgUrls.length}`);
+                
+                const testImg = new Image();
+                testImg.onload = function() {
+                    // 这个URL成功了
+                    console.log(`成功加载: ${currentUrl}`);
+                    img.src = currentUrl;
+                    img.style.opacity = '1';
+                    photoDiv.classList.add('loaded');
+                    
+                    // 添加点击预览功能
+                    setupPhotoClick(img, photoDiv, containerId, index);
+                    
+                    isLoadingImage = false;
+                    
+                    // 继续加载下一张
+                    setTimeout(loadNextImageInQueue, 100);
+                };
+                
+                testImg.onerror = function() {
+                    // 这个URL失败了，尝试下一个
+                    console.log(`路径加载失败: ${currentUrl}`);
+                    currentUrlIndex++;
+                    tryLoadImage();
+                };
+                
+                testImg.src = currentUrl;
+            }
+            
+            // 开始尝试第一个URL
+            tryLoadImage();
+        }
+        
+        // 设置照片点击事件
+        function setupPhotoClick(img, photoDiv, containerId, index) {
+            img.onclick = function() {
+                const modal = document.getElementById('imageModal');
+                const modalImg = document.getElementById('modalImage');
+                modal.style.display = 'block';
+                modalImg.src = this.src;
+                currentLocation = containerId.replace('-photos', '');
+                currentIndex = index;
+                
+                // 如果是移动设备，添加触摸滑动功能
+                if (isMobile) {
+                    setupTouchNavigation();
+                }
+            };
+        }
+        
+        // 触摸滑动功能
+        let touchStartX = 0;
+        let touchEndX = 0;
+        
+        function setupTouchNavigation() {
+            const modal = document.getElementById('imageModal');
+            
+            modal.addEventListener('touchstart', function(e) {
+                touchStartX = e.changedTouches[0].screenX;
+            }, {passive: true});
+            
+            modal.addEventListener('touchend', function(e) {
+                touchEndX = e.changedTouches[0].screenX;
+                handleSwipe();
+            }, {passive: true});
+        }
+        
+        function handleSwipe() {
+            if (touchEndX < touchStartX - 50) {
+                // 左滑：下一张
+                nextImage();
+            } else if (touchEndX > touchStartX + 50) {
+                // 右滑：上一张
+                prevImage();
+            }
+        }
+
+        // 初始化加载照片
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('DOM加载完成，开始加载图片...');
+            
+            // 记录页面加载开始时间
+            const startTime = new Date().getTime();
+            
+            // 尝试不同的图片路径配置
+            const configs = [
+                { photos: luxianggangcunPhotos, path: 'images/spots/luxianggangcun', id: 'luxianggangcun-photos' },
+                { photos: luxianggangcunPhotos, path: './images/spots/luxianggangcun', id: 'luxianggangcun-photos' },
+                { photos: luxianggangcunPhotos, path: '../images/spots/luxianggangcun', id: 'luxianggangcun-photos' }
+            ];
+            
+            // 使用第一个配置，稍后如果需要可以尝试其他配置
+            loadPhotos(luxianggangcunPhotos, 'images/spots/luxianggangcun', 'luxianggangcun-photos');
+            
+            // 使用备用图片作为首张图片，这样至少能保证有内容显示
+            const firstContainer = document.getElementById('luxianggangcun-photos');
+            if (firstContainer && firstContainer.children.length === 0) {
+                const fallbackDiv = document.createElement('div');
+                fallbackDiv.className = 'photo-item loaded';
+                
+                const fallbackImg = document.createElement('img');
+                fallbackImg.src = backupImagePaths[0];
+                fallbackImg.style.opacity = '1';
+                fallbackImg.alt = '备用照片';
+                
+                fallbackDiv.appendChild(fallbackImg);
+                firstContainer.appendChild(fallbackDiv);
+                
+                // 添加点击事件
+                fallbackImg.onclick = function() {
+                    const modal = document.getElementById('imageModal');
+                    const modalImg = document.getElementById('modalImage');
+                    modal.style.display = 'block';
+                    modalImg.src = fallbackImg.src;
+                }
+            }
+            
+            // 延迟加载第二组图片，减轻初始加载压力，并使用更多的备用路径
+            setTimeout(() => {
+                loadPhotos(mingyuewanPhotos, 'images/spots/mingyuewan', 'mingyuewan-photos');
+            }, 1000);
+
+            // 添加关闭预览功能
+            const modal = document.getElementById('imageModal');
+            const closeBtn = document.getElementsByClassName('close')[0];
+
+            closeBtn.onclick = function() {
+                modal.style.display = 'none';
+                stopSlideshow();
+            }
+
+            modal.onclick = function(event) {
+                if (event.target === modal) {
+                    modal.style.display = 'none';
+                    stopSlideshow();
+                }
+            }
+
+            // 添加键盘控制
+            document.addEventListener('keydown', function(e) {
+                if (modal.style.display === 'block') {
+                    if (e.key === 'ArrowLeft') {
+                        prevImage();
+                    } else if (e.key === 'ArrowRight') {
+                        nextImage();
+                    } else if (e.key === 'Escape') {
+                        modal.style.display = 'none';
+                        stopSlideshow();
+                    }
+                }
+            });
+            
+            // 设置音量
+            const bgMusic = document.getElementById('bgMusic');
+            if (bgMusic) {
+                bgMusic.volume = 0.3;
+            }
+            
+            // 打印环境信息用于调试
+            console.log(`当前URL: ${window.location.href}`);
+            console.log(`主机名: ${window.location.hostname}`);
+            console.log(`UserAgent: ${navigator.userAgent}`);
+            console.log(`是否移动设备: ${isMobile ? '是' : '否'}`);
+            
+            // 添加性能优化：在用户滚动时才开始加载更多图片，使用passive listener提高性能
+            document.addEventListener('scroll', handleScroll, { passive: true });
+            
+            // 添加定时器，每隔5秒检查一次加载队列
+            setInterval(() => {
+                if (loadQueue.length > 0 && !isLoadingImage) {
+                    console.log(`定时检查：队列中还有 ${loadQueue.length} 张图片未加载，尝试加载...`);
+                    loadNextImageInQueue();
+                }
+            }, 5000);
+            
+            // 记录页面初始化时间
+            const endTime = new Date().getTime();
+            console.log(`页面初始化完成，耗时: ${endTime - startTime}ms`);
+        });
+        
+        // 处理滚动事件，优化图片加载
+        function handleScroll() {
+            if (!isLoadingImage && loadQueue.length > 0) {
+                loadNextImageInQueue();
+            }
+            
+            // 如果队列已空，移除滚动监听
+            if (loadQueue.length === 0) {
+                document.removeEventListener('scroll', handleScroll);
+            }
+        }
+
+        let currentLocation = '';
+        let currentIndex = 0;
+        let slideshowInterval = null;
+        
+        // 切换自动播放状态
+        function toggleSlideshow(location) {
+            const button = document.querySelector(`#${location}-photos`).previousElementSibling.querySelector('.slideshow-button');
+            
+            if (slideshowInterval) {
+                // 停止播放
+                clearInterval(slideshowInterval);
+                slideshowInterval = null;
+                button.innerHTML = '<i class="fas fa-play"></i> 自动播放';
+                button.classList.remove('playing');
+            } else {
+                // 开始播放
+                currentLocation = location;
+                currentIndex = 0;
+                const photos = location === 'luxianggangcun' ? luxianggangcunPhotos : mingyuewanPhotos;
+                
+                showImage(currentLocation, currentIndex);
+                button.innerHTML = '<i class="fas fa-pause"></i> 停止播放';
+                button.classList.add('playing');
+                
+                slideshowInterval = setInterval(() => {
+                    currentIndex = (currentIndex + 1) % photos.length;
+                    showImage(currentLocation, currentIndex);
+                }, 3000); // 每3秒切换一张图片
+            }
+        }
+        
+        // 显示指定图片
+        function showImage(location, index) {
+            const modal = document.getElementById('imageModal');
+            const modalImg = document.getElementById('modalImage');
+            const photos = location === 'luxianggangcun' ? luxianggangcunPhotos : mingyuewanPhotos;
+            
+            modal.style.display = 'block';
+            
+            // 尝试多个可能的路径
+            const imgUrls = [
+                `images/spots/${location}/${photos[index]}`,
+                `./${location}/${photos[index]}`,
+                `images/${location}/${photos[index]}`,
+                `../${location}/${photos[index]}`
+            ];
+            
+            // 如果出现问题，使用备用图片
+            const fallbackImg = backupImagePaths[index % backupImagePaths.length];
+            
+            // 尝试加载图片
+            tryLoadModalImage(modalImg, imgUrls, fallbackImg);
+        }
+        
+        // 尝试加载模态框图片
+        function tryLoadModalImage(imgElement, urlsToTry, fallbackUrl) {
+            let currentIndex = 0;
+            
+            function tryNextUrl() {
+                if (currentIndex >= urlsToTry.length) {
+                    console.log("所有模态图片URL都失败，使用备用图片");
+                    imgElement.src = fallbackUrl;
+                    return;
+                }
+                
+                const currentUrl = urlsToTry[currentIndex];
+                console.log(`尝试加载模态图片: ${currentUrl}`);
+                
+                const testImg = new Image();
+                testImg.onload = function() {
+                    imgElement.src = currentUrl;
+                };
+                testImg.onerror = function() {
+                    currentIndex++;
+                    tryNextUrl();
+                };
+                testImg.src = currentUrl;
+            }
+            
+            tryNextUrl();
+        }
+        
+        // 上一张图片
+        function prevImage() {
+            if (!currentLocation) return;
+            const photos = currentLocation === 'luxianggangcun' ? luxianggangcunPhotos : mingyuewanPhotos;
+            currentIndex = (currentIndex - 1 + photos.length) % photos.length;
+            showImage(currentLocation, currentIndex);
+        }
+        
+        // 下一张图片
+        function nextImage() {
+            if (!currentLocation) return;
+            const photos = currentLocation === 'luxianggangcun' ? luxianggangcunPhotos : mingyuewanPhotos;
+            currentIndex = (currentIndex + 1) % photos.length;
+            showImage(currentLocation, currentIndex);
+        }
+        
+        // 关闭预览时停止自动播放
+        function stopSlideshow() {
+            if (slideshowInterval) {
+                const button = document.querySelector('.slideshow-button.playing');
+                if (button) {
+                    button.innerHTML = '<i class="fas fa-play"></i> 自动播放';
+                    button.classList.remove('playing');
+                }
+                clearInterval(slideshowInterval);
+                slideshowInterval = null;
+            }
+            currentLocation = '';
+        }
+
+        // 音乐控制
+        let musicPlaying = false;
+        const musicBtn = document.getElementById('musicToggle');
+        const bgMusic = document.getElementById('bgMusic');
+
+        function toggleMusic() {
+            if (musicPlaying) {
+                bgMusic.pause();
+                musicBtn.classList.remove('playing');
+            } else {
+                bgMusic.play();
+                musicBtn.classList.add('playing');
+            }
+            musicPlaying = !musicPlaying;
+        }
+    </script>
+</body>
+</html> 

@@ -1,0 +1,213 @@
+[
+  {
+    "id": 1,
+    "title": "苏州东山二日游",
+    "startDate": "2025-05-15",
+    "endDate": "2025-05-16",
+    "status": "confirmed",
+    "destinations": [
+      {"name": "东山景区", "type": "scenic"},
+      {"name": "陆巷古村", "type": "cultural"},
+      {"name": "雕花楼", "type": "cultural"}
+    ],
+    "members": ["xiaolei", "xiaoying"],
+    "description": "周末两天游览苏州东山特色景点，体验江南水乡风情，品尝地道美食。",
+    "itinerary": [
+      {
+        "day": 1,
+        "date": "2025-05-15",
+        "schedule": [
+          {"time": "09:00", "activity": "从上海出发，驱车前往苏州东山"},
+          {"time": "11:00", "activity": "到达东山景区，参观雕花楼"},
+          {"time": "13:00", "activity": "品尝东山农家菜，太湖三白"},
+          {"time": "15:00", "activity": "游览陆巷古村"},
+          {"time": "18:00", "activity": "入住古村民宿"},
+          {"time": "19:30", "activity": "欣赏太湖夜景"}
+        ]
+      },
+      {
+        "day": 2,
+        "date": "2025-05-16",
+        "schedule": [
+          {"time": "07:30", "activity": "欣赏太湖日出"},
+          {"time": "09:00", "activity": "品尝东山本地早餐"},
+          {"time": "10:30", "activity": "参观明月湾"},
+          {"time": "13:00", "activity": "午餐品尝东山白茶宴"},
+          {"time": "15:00", "activity": "采购东山特产"},
+          {"time": "17:00", "activity": "返回上海"}
+        ]
+      }
+    ],
+    "accommodation": {
+      "name": "流光漫舍民宿",
+      "address": "苏州市吴中区东山镇陆巷村89号",
+      "phone": "0512-88123456",
+      "price": 688
+    },
+    "transportation": {
+      "type": "自驾",
+      "distance": "约120公里",
+      "duration": "约1.5小时",
+      "notes": "走沪苏浙高速，吴中东山出口下"
+    },
+    "budget": {
+      "accommodation": 688,
+      "meals": 800,
+      "transportation": 300,
+      "activities": 200,
+      "shopping": 500,
+      "total": 2488
+    },
+    "notes": "记得带上相机和防晒用品，东山容易堵车，建议错峰出行。",
+    "createdBy": "xiaolei",
+    "createdAt": "2025-04-01",
+    "updatedAt": "2025-04-10"
+  },
+  {
+    "id": 2,
+    "title": "杭州西湖三日游",
+    "startDate": "2025-06-10",
+    "endDate": "2025-06-12",
+    "status": "draft",
+    "destinations": [
+      {"name": "西湖景区", "type": "scenic"},
+      {"name": "灵隐寺", "type": "cultural"},
+      {"name": "雷峰塔", "type": "cultural"},
+      {"name": "三潭印月", "type": "scenic"}
+    ],
+    "members": ["xiaolei"],
+    "description": "端午小长假前往杭州，游览西湖美景，品尝杭帮菜，感受江南风情。",
+    "itinerary": [
+      {
+        "day": 1,
+        "date": "2025-06-10",
+        "schedule": [
+          {"time": "08:00", "activity": "从上海出发，乘高铁前往杭州"},
+          {"time": "10:00", "activity": "抵达杭州，入住酒店"},
+          {"time": "12:00", "activity": "品尝杭州本帮菜"},
+          {"time": "14:00", "activity": "游览西湖十景之一：三潭印月"},
+          {"time": "17:00", "activity": "漫步苏堤"},
+          {"time": "19:00", "activity": "欣赏西湖夜景，品尝西湖醋鱼"}
+        ]
+      }
+    ],
+    "accommodation": {
+      "name": "西湖湖畔酒店",
+      "address": "杭州市西湖区南山路18号",
+      "phone": "0571-87654321",
+      "price": 1200
+    },
+    "transportation": {
+      "type": "高铁",
+      "distance": "约150公里",
+      "duration": "约1小时",
+      "notes": "建议提前购票，高峰期车票紧张"
+    },
+    "budget": {
+      "accommodation": 2400,
+      "meals": 1500,
+      "transportation": 600,
+      "activities": 500,
+      "shopping": 1000,
+      "total": 6000
+    },
+    "notes": "行程第二、三天待完善，计划游览灵隐寺、雷峰塔等景点。",
+    "createdBy": "xiaolei",
+    "createdAt": "2025-04-15",
+    "updatedAt": "2025-04-15"
+  },
+  {
+    "id": 3,
+    "title": "南京古城探秘",
+    "startDate": "2025-07-05",
+    "endDate": "2025-07-07",
+    "status": "pending",
+    "destinations": [
+      {"name": "夫子庙", "type": "cultural"},
+      {"name": "中山陵", "type": "historical"},
+      {"name": "明城墙", "type": "historical"}
+    ],
+    "members": ["xiaoying"],
+    "description": "探访六朝古都南京，感受厚重历史文化，品尝地道南京小吃。",
+    "itinerary": [
+      {
+        "day": 1,
+        "date": "2025-07-05",
+        "schedule": [
+          {"time": "09:00", "activity": "从上海出发，乘高铁前往南京"},
+          {"time": "11:30", "activity": "抵达南京，入住酒店"},
+          {"time": "13:00", "activity": "品尝南京盐水鸭"},
+          {"time": "15:00", "activity": "游览夫子庙秦淮河景区"},
+          {"time": "18:00", "activity": "品尝南京特色小吃"},
+          {"time": "20:00", "activity": "欣赏秦淮河夜景"}
+        ]
+      }
+    ],
+    "budget": {
+      "accommodation": 1800,
+      "meals": 1000,
+      "transportation": 800,
+      "activities": 400,
+      "shopping": 800,
+      "total": 4800
+    },
+    "notes": "行程还需完善，计划增加游览紫金山、总统府等景点。",
+    "createdBy": "xiaoying",
+    "createdAt": "2025-04-20",
+    "updatedAt": "2025-04-20"
+  },
+  {
+    "id": 4,
+    "title": "上海都市周末游",
+    "startDate": "2025-08-15",
+    "endDate": "2025-08-16",
+    "status": "confirmed",
+    "destinations": [
+      {"name": "外滩", "type": "scenic"},
+      {"name": "南京路", "type": "shopping"},
+      {"name": "迪士尼", "type": "entertainment"}
+    ],
+    "members": ["xiaolei", "xiaoying"],
+    "description": "探索魔都上海的精彩，体验繁华都市与童话乐园的双重魅力。",
+    "itinerary": [
+      {
+        "day": 1,
+        "date": "2025-08-15",
+        "schedule": [
+          {"time": "10:00", "activity": "前往上海迪士尼乐园"},
+          {"time": "11:00", "activity": "游玩迪士尼乐园各个主题区"},
+          {"time": "19:30", "activity": "观看迪士尼烟花表演"},
+          {"time": "21:00", "activity": "返回酒店休息"}
+        ]
+      },
+      {
+        "day": 2,
+        "date": "2025-08-16",
+        "schedule": [
+          {"time": "09:00", "activity": "前往外滩观光"},
+          {"time": "11:30", "activity": "品尝本帮菜午餐"},
+          {"time": "13:30", "activity": "漫步南京路购物"},
+          {"time": "17:00", "activity": "乘坐黄浦江游船"},
+          {"time": "19:00", "activity": "欣赏外滩夜景"}
+        ]
+      }
+    ],
+    "accommodation": {
+      "name": "上海浦东香格里拉酒店",
+      "address": "上海市浦东新区世纪大道88号",
+      "phone": "021-12345678",
+      "price": 1500
+    },
+    "budget": {
+      "accommodation": 1500,
+      "meals": 1000,
+      "transportation": 200,
+      "activities": 1600,
+      "shopping": 2000,
+      "total": 6300
+    },
+    "createdBy": "xiaoying",
+    "createdAt": "2025-03-20",
+    "updatedAt": "2025-04-05"
+  }
+] 

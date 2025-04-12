@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="referrer" content="never">
+    <base href="./">
+    <title>莹磊悦行 - 旅行日志</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        /* 基础样式 */
+        body {
+            font-family: 'Microsoft YaHei', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            color: #333;
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* 顶部样式 */
+        .header {
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(45deg, #1a237e, #e65100);
+            padding: 30px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+        }
+
+        .header h1 {
+            color: white;
+            margin: 0;
+            font-size: 28px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .back-button {
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(255,255,255,0.2);
+            padding: 10px 15px;
+            border-radius: 20px;
+            color: white;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(5px);
+        }
+
+        .back-button:hover {
+            background: rgba(255,255,255,0.3);
+            transform: translateY(-2px);
+        }
+
+        /* 添加导航菜单样式 */
+        .header-nav {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        
+        .header-nav a {
+            text-decoration: none;
+            background: rgba(255,255,255,0.1);
+            color: white;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+        
+        .header-nav a:hover, .header-nav a.active {
+            background: rgba(255,255,255,0.3);
+            transform: translateY(-2px);
+        }
+
+        /* 日志列表样式 */
+        .blog-filters {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .filter-item {
+            background: white;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .filter-item:hover, .filter-item.active {
+            background: #1a237e;
+            color: white;
+        }
+
+        .blog-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 25px;
+        }
+
+        .blog-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+
+        .blog-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+        }
+
+        .blog-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .blog-content {
+            padding: 20px;
+        }
+
+        .blog-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: #1a237e;
+        }
+
+        .blog-meta {
+            display: flex;
+            justify-content: space-between;
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 15px;
+        }
+
+        .blog-excerpt {
+            color: #555;
+            margin-bottom: 15px;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .blog-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .blog-tag {
+            background: rgba(26, 35, 126, 0.1);
+            color: #1a237e;
+            font-size: 12px;
+            padding: 3px 10px;
+            border-radius: 15px;
+        }
+
+        .blog-link {
+            display: inline-block;
+            background: linear-gradient(45deg, #1a237e, #e65100);
+            color: white;
+            padding: 8px 15px;
+            border-radius: 20px;
+            text-decoration: none;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+
+        .blog-link:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        /* 创建按钮 */
+        .create-blog {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(45deg, #1a237e, #e65100);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 24px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            z-index: 100;
+        }
+
+        .create-blog:hover {
+            transform: scale(1.1);
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .blog-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .header {
+                flex-direction: column;
+                gap: 15px;
+                text-align: center;
+            }
+            
+            .header-nav {
+                width: 100%;
+                justify-content: center;
+                margin-top: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1><i class="fas fa-book-open"></i> 旅行日志</h1>
+            <a href="index.html" class="back-button">
+                <i class="fas fa-arrow-left"></i> 返回首页
+            </a>
+            <nav class="header-nav">
+                <a href="index.html">首页</a>
+                <a href="travel.html">旅游攻略</a>
+                <a href="memories.html">旅行回忆</a>
+                <a href="plans.html">行程规划</a>
+                <a href="blog.html" class="active">旅行日志</a>
+            </nav>
+        </div>
+
+        <div class="blog-filters">
+            <div class="filter-item active">全部</div>
+            <div class="filter-item">景点游记</div>
+            <div class="filter-item">美食探店</div>
+            <div class="filter-item">住宿体验</div>
+            <div class="filter-item">交通攻略</div>
+            <div class="filter-item">小贴士</div>
+        </div>
+
+        <div class="blog-grid">
+            <!-- 日志卡片1 -->
+            <div class="blog-card">
+                <img src="images/spots/mingyuewan/556c1702aada701a03489ef41f278fc.jpg" alt="苏州之旅" class="blog-image">
+                <div class="blog-content">
+                    <div class="blog-title">太湖畔的静谧时光 - 苏州东山三日游记</div>
+                    <div class="blog-meta">
+                        <span><i class="fas fa-user"></i> 小莹</span>
+                        <span><i class="far fa-calendar-alt"></i> 2025-04-10</span>
+                    </div>
+                    <div class="blog-excerpt">
+                        春日的苏州东山，阳光正好，微风不燥。我和小磊沿着太湖边漫步，欣赏着湖光山色。雕花楼的精美木雕让人叹为观止，陆巷古村的小桥流水勾勒出一幅江南水墨画...
+                    </div>
+                    <div class="blog-tags">
+                        <span class="blog-tag">苏州</span>
+                        <span class="blog-tag">东山</span>
+                        <span class="blog-tag">太湖</span>
+                        <span class="blog-tag">春游</span>
+                    </div>
+                    <a href="#" class="blog-link">阅读全文</a>
+                </div>
+            </div>
+
+            <!-- 日志卡片2 -->
+            <div class="blog-card">
+                <img src="images/spots/luxianggangcun/522fbbc2e0c4754fc85dcfb8d535a09.jpg" alt="西山游记" class="blog-image">
+                <div class="blog-content">
+                    <div class="blog-title">云雾缭绕的西山秘境 - 探访林屋洞与缥缈峰</div>
+                    <div class="blog-meta">
+                        <span><i class="fas fa-user"></i> 小磊</span>
+                        <span><i class="far fa-calendar-alt"></i> 2025-04-15</span>
+                    </div>
+                    <div class="blog-excerpt">
+                        西山的清晨，云雾缭绕，如临仙境。我们早早出发前往缥缈峰，一路上山花烂漫，树影婆娑。登顶后俯瞰太湖全景，蓝天、白云、湖水连成一片，美不胜收...
+                    </div>
+                    <div class="blog-tags">
+                        <span class="blog-tag">苏州</span>
+                        <span class="blog-tag">西山</span>
+                        <span class="blog-tag">林屋洞</span>
+                        <span class="blog-tag">徒步</span>
+                    </div>
+                    <a href="#" class="blog-link">阅读全文</a>
+                </div>
+            </div>
+
+            <!-- 日志卡片3 -->
+            <div class="blog-card">
+                <img src="images/spots/1636714294996851_836_10000.jpg" alt="美食游记" class="blog-image">
+                <div class="blog-content">
+                    <div class="blog-title">舌尖上的苏州 - 寻味太湖三白与本帮菜</div>
+                    <div class="blog-meta">
+                        <span><i class="fas fa-user"></i> 小莹</span>
+                        <span><i class="far fa-calendar-alt"></i> 2025-04-20</span>
+                    </div>
+                    <div class="blog-excerpt">
+                        说到苏州美食，不得不提"太湖三白"——白鱼、白虾、银鱼。我们在东山的一家临湖餐厅，品尝了最新鲜的太湖三白，鲜嫩爽滑，回味无穷。此外，东山酱鸭、碧螺春炒虾仁等本帮菜也各具特色...
+                    </div>
+                    <div class="blog-tags">
+                        <span class="blog-tag">美食</span>
+                        <span class="blog-tag">太湖三白</span>
+                        <span class="blog-tag">本帮菜</span>
+                        <span class="blog-tag">东山酱鸭</span>
+                    </div>
+                    <a href="#" class="blog-link">阅读全文</a>
+                </div>
+            </div>
+
+            <!-- 日志卡片4 -->
+            <div class="blog-card">
+                <img src="images/spots/W020210817323928993643.jpg" alt="住宿体验" class="blog-image">
+                <div class="blog-content">
+                    <div class="blog-title">水乡民宿体验 - 在百年老宅中感受时光流转</div>
+                    <div class="blog-meta">
+                        <span><i class="fas fa-user"></i> 小磊</span>
+                        <span><i class="far fa-calendar-alt"></i> 2025-04-25</span>
+                    </div>
+                    <div class="blog-excerpt">
+                        在陆巷古村，我们入住了一家百年老宅改造的民宿。推窗可见小桥流水，夜晚伴着蛙鸣入睡，清晨被鸟啼唤醒。木质结构的房间保留了原有的雕花梁柱，却融入了现代化的设施，古朴与舒适并存...
+                    </div>
+                    <div class="blog-tags">
+                        <span class="blog-tag">民宿</span>
+                        <span class="blog-tag">陆巷古村</span>
+                        <span class="blog-tag">老宅</span>
+                        <span class="blog-tag">住宿体验</span>
+                    </div>
+                    <a href="#" class="blog-link">阅读全文</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="create-blog" title="创建新日志">
+            <i class="fas fa-plus"></i>
+        </div>
+    </div>
+
+    <script src="js/data-loader.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', async function() {
+            try {
+                // 初始化数据加载器
+                await dataLoader.init();
+                
+                // 加载博客数据
+                renderBlogs();
+                
+                // 过滤功能
+                const filterItems = document.querySelectorAll('.filter-item');
+                filterItems.forEach(item => {
+                    item.addEventListener('click', function() {
+                        // 移除所有active类
+                        filterItems.forEach(i => i.classList.remove('active'));
+                        // 添加当前item的active类
+                        this.classList.add('active');
+                        
+                        // 根据筛选条件显示博客
+                        const filter = this.textContent.trim();
+                        const category = filter === '全部' ? null : filter;
+                        renderBlogs({ category });
+                    });
+                });
+            } catch (error) {
+                console.error('初始化失败:', error);
+                alert('数据加载失败，请刷新页面重试');
+            }
+
+            // 创建新日志按钮点击事件
+            const createButton = document.querySelector('.create-blog');
+            createButton.addEventListener('click', function() {
+                alert('此功能正在开发中，敬请期待！');
+                // 实际应用中，这里应该跳转到日志编辑页面或显示创建日志的模态框
+            });
+        });
+        
+        // 渲染博客列表
+        function renderBlogs(filters = {}) {
+            const blogGrid = document.querySelector('.blog-grid');
+            const blogs = dataLoader.getBlogs(filters);
+            
+            // 清空现有内容
+            blogGrid.innerHTML = '';
+            
+            if (blogs.length === 0) {
+                blogGrid.innerHTML = '<div style="grid-column: 1/-1; text-align: center; padding: 30px;">没有找到符合条件的博客</div>';
+                return;
+            }
+            
+            // 添加博客卡片
+            blogs.forEach(blog => {
+                const blogCard = document.createElement('div');
+                blogCard.className = 'blog-card';
+                
+                blogCard.innerHTML = `
+                    <img src="${blog.coverImage}" alt="${blog.title}" class="blog-image">
+                    <div class="blog-content">
+                        <div class="blog-title">${blog.title}</div>
+                        <div class="blog-meta">
+                            <span><i class="fas fa-user"></i> ${blog.authorName}</span>
+                            <span><i class="far fa-calendar-alt"></i> ${blog.date}</span>
+                        </div>
+                        <div class="blog-excerpt">
+                            ${blog.excerpt}
+                        </div>
+                        <div class="blog-tags">
+                            ${blog.tags.map(tag => `<span class="blog-tag">${tag}</span>`).join('')}
+                        </div>
+                        <a href="blog-detail.html?id=${blog.id}" class="blog-link">阅读全文</a>
+                    </div>
+                `;
+                
+                blogGrid.appendChild(blogCard);
+            });
+        }
+    </script>
+</body>
+</html> 
