@@ -588,6 +588,55 @@
                 grid-template-columns: 1fr;
             }
         }
+
+        .user-menu {
+            position: relative;
+            display: inline-block;
+            cursor: pointer;
+            padding: 8px 15px;
+            border-radius: 20px;
+            background: rgba(58, 110, 165, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .user-menu:hover {
+            background: rgba(58, 110, 165, 0.2);
+        }
+
+        #nav-username {
+            color: #3a6ea5;
+            font-weight: 500;
+        }
+
+        .dropdown-menu {
+            display: none;
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            border-radius: 8px;
+            padding: 8px 0;
+            min-width: 120px;
+            z-index: 1000;
+        }
+
+        .user-menu:hover .dropdown-menu {
+            display: block;
+        }
+
+        .dropdown-menu a {
+            display: block;
+            padding: 8px 15px;
+            color: #555;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .dropdown-menu a:hover {
+            background: rgba(58, 110, 165, 0.1);
+            color: #3a6ea5;
+        }
     </style>
     <!-- 页面加载前检查登录状态 -->
     <script>
@@ -659,8 +708,14 @@
                 <a href="index.html">首页</a>
                 <a href="travel.html">旅游攻略</a>
                 <a href="memories.html">回忆相册</a>
-                <a href="login.html">登录</a>
+                <div class="user-menu">
+                    <span id="nav-username"></span>
+                    <div class="dropdown-menu">
+                        <a href="profile.html">个人中心</a>
+                        <a href="#" id="logout-btn">退出登录</a>
                     </div>
+                </div>
+            </div>
                 </div>
     </header>
     
